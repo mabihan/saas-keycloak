@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="02" author="carina" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="employee"/>
+            </not>
+        </preConditions>
+        <createTable tableName="employee" remarks="A table to contain all the employees">
+            <column name="id" type="int8" autoIncrement="true">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="document_number" type="int8">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="date_of_birth" type="DATE">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="rule" type="varchar(20)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="job_description" type="varchar(100)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="admission_date" type="DATE">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="resignation_date" type="DATE">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column name="active" type="bool">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="updated_date" type="TIMESTAMP">
+                <constraints nullable="true" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

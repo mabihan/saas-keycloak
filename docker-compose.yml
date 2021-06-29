@@ -1,0 +1,18 @@
+version: '3'
+
+networks:
+  db:
+
+services:
+  docker-postgres:
+    image: library/postgres:10.13
+    container_name: docker-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - db
+    restart: always

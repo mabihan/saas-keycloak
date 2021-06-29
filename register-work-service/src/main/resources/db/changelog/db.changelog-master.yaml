@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/01-create-sequence.xml
+  - include:
+      file: db/changelog/02-create-employee-schema.xml
