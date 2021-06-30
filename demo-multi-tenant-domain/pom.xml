@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>demo-multi-tenant-domain</name>
-    <description>Register Work Hour - Domain</description>
+    <description>Demo Multi Tenant Schema - Domain</description>
 
     <parent>
         <artifactId>demo-multi-tenant-schema</artifactId>

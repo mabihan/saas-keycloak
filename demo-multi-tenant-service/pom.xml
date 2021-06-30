@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>demo-multi-tenant-service</name>
-    <description>Demo Kotlin Project with Spring Boot with - Service</description>
+    <description>Demo Multi Tenant Schema - Service</description>
 
     <parent>
         <artifactId>demo-multi-tenant-schema</artifactId>
@@ -19,6 +19,7 @@
     <properties>
         <demo-multi-tenant-client.version>0.0.1-SNAPSHOT</demo-multi-tenant-client.version>
         <demo-multi-tenant-domain.version>0.0.1-SNAPSHOT</demo-multi-tenant-domain.version>
+        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -63,6 +64,18 @@
             <version>1.4.194</version>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <finalName>demo-multi-tenant-schema-service</finalName>
