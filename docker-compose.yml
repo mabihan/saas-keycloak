@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  db:
+  demo:
 
 services:
   docker-postgres:
@@ -14,5 +14,25 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     networks:
-      - db
+      - demo
+    restart: always
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: docker-postgres
+      DB_DATABASE: db
+      DB_USER: postgres
+      DB_SCHEMA: public
+      DB_PASSWORD: postgres
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: 123456
+      # don't use password like this one above in production.
+    ports:
+      - 8080:8080
+    depends_on:
+      - docker-postgres
+    networks:
+      - demo
     restart: always
