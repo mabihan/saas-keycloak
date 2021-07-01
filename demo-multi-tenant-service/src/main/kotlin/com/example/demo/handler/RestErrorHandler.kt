@@ -64,7 +64,7 @@ class RestErrorHandler {
                 ProductHttpResponse.PRODUCT_BAD_REQUEST.httpMessage, errorList)
     }
 
-    @ExceptionHandler(AlreadyExistException::class)
+    @ExceptionHandler(BadRequestException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleBadRequestException(exception: BadRequestException): MessageResponse? {
         val errorList = ArrayList<String>()
