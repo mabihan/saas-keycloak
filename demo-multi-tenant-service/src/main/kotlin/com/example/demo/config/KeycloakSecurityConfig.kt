@@ -1,8 +1,10 @@
 package com.example.demo.config
 
+import com.example.demo.filter.RequestFilter
 import org.keycloak.adapters.KeycloakConfigResolver
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter
+import org.keycloak.adapters.springsecurity.filter.KeycloakAuthenticationProcessingFilter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -27,6 +29,8 @@ class KeycloakSecurityConfig : KeycloakWebSecurityConfigurerAdapter() {
                 .anyRequest()
                 .permitAll()
         http.csrf().disable()
+
+        http.addFilterBefore(requestFilter(), KeycloakAuthenticationProcessingFilter::class.java)
     }
 
     @Autowired
@@ -45,6 +49,11 @@ class KeycloakSecurityConfig : KeycloakWebSecurityConfigurerAdapter() {
     @Bean
     fun keycloakConfigResolver(): KeycloakConfigResolver {
         return KeycloakSpringBootConfigResolver()
+    }
+
+    @Bean
+    fun requestFilter(): RequestFilter? {
+        return RequestFilter()
     }
 
 }
