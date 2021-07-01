@@ -1,6 +1,6 @@
 package com.example.demo.usecase
 
-import com.example.demo.exception.ProductAlreadyExistException
+import com.example.demo.exception.AlreadyExistException
 import com.example.demo.gateway.CreateProductGateway
 import com.example.demo.gateway.HasProductCreatedGateway
 import com.example.demo.model.ProductDomain
@@ -17,7 +17,7 @@ class CreateProductUseCase(private val hasProductCreatedGateway: HasProductCreat
     fun execute(productDomain: ProductDomain) {
         if (hasProductCreatedGateway.execute(productDomain)) {
             log.info("Product already exist")
-            throw ProductAlreadyExistException("Product already exist")
+            throw AlreadyExistException("Product already exist")
         }
 
         createProductGateway.execute(productDomain)

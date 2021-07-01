@@ -1,7 +1,8 @@
 package com.example.demo.handler
 
-import com.example.demo.exception.ProductAlreadyExistException
-import com.example.demo.exception.ProductInternalErrorException
+import com.example.demo.exception.AlreadyExistException
+import com.example.demo.exception.BadRequestException
+import com.example.demo.exception.InternalErrorException
 import com.example.demo.model.MessageResponse
 import com.example.demo.model.ProductHttpResponse
 import org.slf4j.Logger
@@ -63,9 +64,19 @@ class RestErrorHandler {
                 ProductHttpResponse.PRODUCT_BAD_REQUEST.httpMessage, errorList)
     }
 
-    @ExceptionHandler(ProductAlreadyExistException::class)
+    @ExceptionHandler(AlreadyExistException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleBadRequestException(exception: BadRequestException): MessageResponse? {
+        val errorList = ArrayList<String>()
+        errorList.add(exception.message!!)
+
+        return MessageResponse(ProductHttpResponse.PRODUCT_BAD_REQUEST.httpStatus,
+                ProductHttpResponse.PRODUCT_BAD_REQUEST.httpMessage, errorList)
+    }
+
+    @ExceptionHandler(AlreadyExistException::class)
     @ResponseStatus(HttpStatus.ALREADY_REPORTED)
-    fun handleProductAlreadyExistException(exception: ProductAlreadyExistException): MessageResponse? {
+    fun handleProductAlreadyExistException(exception: AlreadyExistException): MessageResponse? {
         val errorList = ArrayList<String>()
         errorList.add(exception.message!!)
 
@@ -73,9 +84,9 @@ class RestErrorHandler {
                 ProductHttpResponse.PRODUCT_ALREADY_EXIST.httpMessage, errorList)
     }
 
-    @ExceptionHandler(ProductInternalErrorException::class)
+    @ExceptionHandler(InternalErrorException::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun handleProductInternalErrorException(exception: ProductInternalErrorException): MessageResponse? {
+    fun handleProductInternalErrorException(exception: InternalErrorException): MessageResponse? {
         val errorList = ArrayList<String>()
         errorList.add(exception.message!!)
 

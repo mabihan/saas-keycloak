@@ -1,6 +1,6 @@
 package com.example.demo.gateway.database.impl
 
-import com.example.demo.exception.ProductInternalErrorException
+import com.example.demo.exception.InternalErrorException
 import com.example.demo.gateway.CreateProductGateway
 import com.example.demo.gateway.database.repository.ProductRepository
 import com.example.demo.gateway.database.translator.ProductDomainToProductDBTranslator
@@ -19,7 +19,7 @@ class CreateProductGatewayImpl(private val productRepository: ProductRepository)
             productRepository.save(ProductDomainToProductDBTranslator().translate(productDomain))
         } catch (ex: Exception) {
             log.error("Internal error to create the product", ex)
-            throw ProductInternalErrorException("Internal error to create the product: " + ex.message)
+            throw InternalErrorException("Internal error to create the product: " + ex.message)
         }
     }
 

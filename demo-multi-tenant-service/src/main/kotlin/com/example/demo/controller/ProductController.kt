@@ -24,11 +24,6 @@ class ProductController(private val createProductUseCase: CreateProductUseCase) 
 
         log.info("Creating the product for user: {}", token.preferredUsername)
 
-        // Created a custom attribute in user and map in client application
-        // val customClaims = token.otherClaims
-        // val companyName = customClaims.get("company_name")
-        // log.info("Company name: {}", companyName.toString())
-
         val productDomain = ProductRequestToProductDomainTranslator().translate(productRequest,
                 keycloakAuthentication.account.keycloakSecurityContext.realm, token.preferredUsername)
 

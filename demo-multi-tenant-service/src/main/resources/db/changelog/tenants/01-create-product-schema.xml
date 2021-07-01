@@ -4,9 +4,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+                      https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
-    <changeSet id="02" author="carina" runOnChange="true">
+    <changeSet id="01" author="carina" runOnChange="true">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="product"/>
@@ -14,7 +14,7 @@
         </preConditions>
         <createTable tableName="product" remarks="A table of company products">
             <column name="id" type="int8" autoIncrement="true">
-                <constraints nullable="false" unique="true" primaryKey="true"/>
+                <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="pk_product"/>
             </column>
             <column name="company_name" type="varchar(30)">
                 <constraints nullable="false" unique="false"/>

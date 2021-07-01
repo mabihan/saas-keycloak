@@ -27,6 +27,19 @@ Demo project for Spring Boot with Kotlin, Keycloak 11, Multi Tenant by Schema an
 - Create the user branch_office_1 and branch_office_2. In Credentials Tab, set the password to '123456' and set Temporary to 'OFF'. In Role Mappings Tab, in Available Roles, select the 'branch_office' to Add Selected.
 - Create the user company_1. In Credentials Tab, set the password to '123456' and set Temporary to 'OFF'. In Role Mappings Tab, in Available Roles, select the 'company' to Add Selected.
 
+##### In Postgress Database
+- Create the schema, named as master.
+
+##### Custom User Attribute
+- In Keycloak Users, select for example the user 'branch_office_1' and Edit.
+- Go to Attributes.
+- Create the key 'schema_name', and set the value 'schema_tenant_1', and Save.
+- Go to Clients.
+- Select for example the client 'backend-api'.
+- Go to Mappers.
+- Create the Mapper 'schema_name'. Select the 'User Attribute' as 'Mapper Type'. Select 'String' as 'Claim JSON Type'. Fill 'schema_name' in 'User Attribute' and 'Token Claim Name'.
+- Now you can receive a custom user attribute in your access token.
+
 ##### Start the application
 - Start with maven clean install.
 
@@ -45,13 +58,3 @@ Demo project for Spring Boot with Kotlin, Keycloak 11, Multi Tenant by Schema an
 - The value of client_secret, you must see the Secret id of the Realm Client generated in your Keycloak.
 - After authenticate, get the 'access_token' generated in the response of the above request.
 - Now you can do a GET in 'http://localhost:8090/v1/product' passing in the Header the KEY(Authorization), and the VALUE(Bearer access_token).
-
-##### Custom User Attribute
-- In Keycloak Users, select for example the user 'branch_office_1' and Edit.
-- Go to Attributes.
-- Create for example the key 'company_name', and the value 'company_master_1', and Save.
-- Go to Clients.
-- Select for example the client 'backend-api'.
-- Go to Mappers.
-- Create the Mapper 'company_name'. Select the 'User Attribute' as 'Mapper Type'. Select 'String' as 'Claim JSON Type'. Fill 'company_name' in 'User Attribute' and 'Token Claim Name'.
-- Now you can receive a custom user attribute in your access token.

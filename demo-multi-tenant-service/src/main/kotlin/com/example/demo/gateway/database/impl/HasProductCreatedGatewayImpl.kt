@@ -1,6 +1,6 @@
 package com.example.demo.gateway.database.impl
 
-import com.example.demo.exception.ProductInternalErrorException
+import com.example.demo.exception.InternalErrorException
 import com.example.demo.gateway.HasProductCreatedGateway
 import com.example.demo.gateway.database.repository.ProductRepository
 import com.example.demo.model.ProductDomain
@@ -20,7 +20,7 @@ class HasProductCreatedGatewayImpl(private val productRepository: ProductReposit
                     productDomain.branchOfficeName, productDomain.productName, productDomain.unitType, true)
         } catch (ex: Exception) {
             log.error("Internal error to find the product", ex)
-            throw ProductInternalErrorException("Internal error to find the product: " + ex.message)
+            throw InternalErrorException("Internal error to find the product: " + ex.message)
         }
     }
 
