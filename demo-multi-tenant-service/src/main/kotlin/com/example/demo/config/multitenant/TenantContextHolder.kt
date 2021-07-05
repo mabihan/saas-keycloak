@@ -6,10 +6,10 @@ class TenantContextHolder {
 
     companion object {
         private val log = LoggerFactory.getLogger(TenantContextHolder::class.java)
-        const val defaultSchema = "master"
+
         private val currentSchema = ThreadLocal<String>()
 
-        fun getCurrentSchema(): String {
+        fun getCurrentSchema(defaultSchema: String): String {
             return currentSchema.get() ?: return defaultSchema
         }
 
@@ -18,7 +18,7 @@ class TenantContextHolder {
             log.info("Current schema = {}", schema)
         }
 
-        fun setDefaultSchema() {
+        fun setDefaultSchema(defaultSchema: String) {
             setCurrentSchema(defaultSchema)
         }
     }

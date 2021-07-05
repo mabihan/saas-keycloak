@@ -24,8 +24,7 @@ Demo project for Spring Boot with Kotlin, Keycloak 11, Multi Tenant by Schema an
 - Create the role named as 'branch_office', and set the Composite Roles to 'ON'. In Client Roles, select the 'backend-api', and in Available Roles, select the 'branch_office' to Add Selected.
 
 ##### Create the Users:
-- Create the user branch_office_1 and branch_office_2. In Credentials Tab, set the password to '123456' and set Temporary to 'OFF'. In Role Mappings Tab, in Available Roles, select the 'branch_office' to Add Selected.
-- Create the user company_1. In Credentials Tab, set the password to '123456' and set Temporary to 'OFF'. In Role Mappings Tab, in Available Roles, select the 'company' to Add Selected.
+- Create the user branch_office_1 and branch_office_2. In Credentials Tab, set the password to '123456' and set Temporary to 'OFF'. In Role Mappings Tab, in Available Roles(Realm Roles and Client Roles), select the 'branch_office' to Add Selected.
 
 ##### In Postgress Database
 - Create the schema, named as master.
@@ -39,6 +38,7 @@ Demo project for Spring Boot with Kotlin, Keycloak 11, Multi Tenant by Schema an
 - Go to Mappers.
 - Create the Mapper 'schema_name'. Select the 'User Attribute' as 'Mapper Type'. Select 'String' as 'Claim JSON Type'. Fill 'schema_name' in 'User Attribute' and 'Token Claim Name'.
 - Now you can receive a custom user attribute in your access token.
+- For user 'branch_office_2', do the same steps above, but in schema_name fill the value 'schema_tenant_2'. When you login with this user, the values will be saved in database schema: schema_tenant_2.
 
 ##### Start the application
 - Start with maven clean install.
@@ -57,4 +57,4 @@ Demo project for Spring Boot with Kotlin, Keycloak 11, Multi Tenant by Schema an
 
 - The value of client_secret, you must see the Secret id of the Realm Client generated in your Keycloak.
 - After authenticate, get the 'access_token' generated in the response of the above request.
-- Now you can do a GET in 'http://localhost:8090/v1/product' passing in the Header the KEY(Authorization), and the VALUE(Bearer access_token).
+- Now you can do a POST in 'http://localhost:8090/v1/product' passing in the Header the KEY(Authorization), and the VALUE(Bearer access_token).

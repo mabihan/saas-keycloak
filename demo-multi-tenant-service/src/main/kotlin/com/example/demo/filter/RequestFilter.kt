@@ -3,6 +3,7 @@ package com.example.demo.filter
 import com.example.demo.config.multitenant.TenantContextHolder
 import com.example.demo.exception.BadRequestException
 import org.keycloak.KeycloakPrincipal
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpServletResponse
 
 class RequestFilter : OncePerRequestFilter() {
 
+    @Value("\${spring.liquibase.default-schema}")
+    val defaultSchema = ""
+
     @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         try {
@@ -22,12 +26,12 @@ class RequestFilter : OncePerRequestFilter() {
             if (StringUtils.hasText(schemaName)) {
                 TenantContextHolder.setCurrentSchema(schemaName)
             } else {
-                TenantContextHolder.setDefaultSchema()
+                TenantContextHolder.setDefaultSchema(defaultSchema)
             }
         } catch (ex: BadRequestException) {
             throw ex
         } catch (ex: RuntimeException) {
-            TenantContextHolder.setDefaultSchema()
+            TenantContextHolder.setDefaultSchema(defaultSchema)
         }
 
         filterChain.doFilter(request, response)
