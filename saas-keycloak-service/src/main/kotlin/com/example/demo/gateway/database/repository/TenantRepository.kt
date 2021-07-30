@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TenantRepository : JpaRepository<TenantDB, Long> {
+
+    fun existsByNamespace(name: String): Boolean
+
+    fun findByNamespace(name: String): TenantDB
+
 }

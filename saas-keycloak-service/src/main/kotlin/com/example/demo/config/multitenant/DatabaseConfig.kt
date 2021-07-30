@@ -8,7 +8,7 @@ import org.hibernate.context.spi.CurrentTenantIdentifierResolver
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import java.util.HashMap
 import org.hibernate.MultiTenancyStrategy
-import com.example.demo.DemoCreateProductApplication
+import com.example.demo.SaasKeycloak
 import org.hibernate.cfg.Environment
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -34,7 +34,7 @@ class DatabaseConfig(private val jpaProperties: JpaProperties) {
 
         val em = LocalContainerEntityManagerFactoryBean()
         em.dataSource = dataSource
-        em.setPackagesToScan(DemoCreateProductApplication::class.java.getPackage().name)
+        em.setPackagesToScan(SaasKeycloak::class.java.getPackage().name)
         em.jpaVendorAdapter = jpaVendorAdapter()
         em.setJpaPropertyMap(jpaPropertiesMap)
         return em

@@ -1,9 +1,9 @@
 package com.example.demo.config.multitenant
 
-import liquibase.integration.spring.SpringLiquibase
+import com.example.demo.gateway.database.model.TenantDB
 import com.example.demo.gateway.database.repository.TenantRepository
 import liquibase.integration.spring.MultiTenantSpringLiquibase
-import com.example.demo.gateway.database.model.TenantDB
+import liquibase.integration.spring.SpringLiquibase
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
@@ -36,5 +36,4 @@ class LiquibaseConfig {
         liquibase.isShouldRun = true
         return liquibase
     }
-
 }

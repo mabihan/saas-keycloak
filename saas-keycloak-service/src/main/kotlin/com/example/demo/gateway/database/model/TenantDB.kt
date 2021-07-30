@@ -9,6 +9,8 @@ class TenantDB(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
 
-        val name: String,
+        val namespace: String,
+
+        @Column(name = "db_schema")
         val schema: String,
 )

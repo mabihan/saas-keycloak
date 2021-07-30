@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DemoCreateProductApplication
+class SaasKeycloak
 
 fun main(args: Array<String>) {
-	runApplication<DemoCreateProductApplication>(*args)
+    runApplication<SaasKeycloak>(*args)
 }

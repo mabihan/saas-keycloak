@@ -8,12 +8,12 @@
 
     <changeSet id="03" author="carina" runOnChange="true">
         <insert tableName="tenant" >
-            <column name="name">tenant_1</column>
-            <column name="schema">schema_tenant_1</column>
+            <column name="namespace">tenant_1</column>
+            <column name="db_schema">schema_tenant_1</column>
         </insert>
         <insert tableName="tenant" >
-            <column name="name">tenant_2</column>
-            <column name="schema">schema_tenant_2</column>
+            <column name="namespace">tenant_2</column>
+            <column name="db_schema">schema_tenant_2</column>
         </insert>
     </changeSet>
 </databaseChangeLog>

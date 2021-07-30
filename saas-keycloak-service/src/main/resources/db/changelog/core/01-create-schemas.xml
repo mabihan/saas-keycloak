@@ -7,10 +7,10 @@
                       https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
 
     <changeSet id="01" author="carina" runOnChange="true">
-        <sql dbms="postgresql" endDelimiter=";">
+        <sql dbms="mariadb" endDelimiter=";">
             CREATE SCHEMA schema_tenant_1
         </sql>
-        <sql dbms="postgresql" endDelimiter=";">
+        <sql dbms="mariadb" endDelimiter=";">
             CREATE SCHEMA schema_tenant_2
         </sql>
     </changeSet>

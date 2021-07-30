@@ -4,15 +4,25 @@ networks:
   demo:
 
 services:
-  docker-postgres:
-    image: library/postgres:10.13
-    container_name: docker-postgres
+  mariadb-kotlin:
+    image: mariadb:latest
+    container_name: mariadb-kotlin
     ports:
-      - "5432:5432"
+      - 6612:3306
     environment:
-      - POSTGRES_DB=db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - MARIADB_DATABASE=master
+      - MARIADB_ROOT_PASSWORD=changeme
+    networks:
+      - demo
+    restart: always
+  mariadb-keycloak:
+    image: mariadb:latest
+    container_name: mariadb-keycloak
+    ports:
+      - 6613:3306
+    environment:
+      - MARIADB_DATABASE=keycloak_db
+      - MARIADB_ROOT_PASSWORD=changeme
     networks:
       - demo
     restart: always
@@ -20,19 +30,17 @@ services:
     image: quay.io/keycloak/keycloak:11.0.3
     container_name: keycloak
     environment:
-      DB_VENDOR: POSTGRES
-      DB_ADDR: docker-postgres
-      DB_DATABASE: db
-      DB_USER: postgres
-      DB_SCHEMA: public
-      DB_PASSWORD: postgres
+      DB_VENDOR: MARIADB
+      DB_ADDR: mariadb-keycloak
+      DB_DATABASE: keycloak_db
+      DB_USER: root
+      DB_PASSWORD: changeme
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: 123456
-      # don't use password like this one above in production.
     ports:
       - 8080:8080
     depends_on:
-      - docker-postgres
+      - mariadb-keycloak
     networks:
       - demo
     restart: always

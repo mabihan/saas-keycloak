@@ -3,8 +3,10 @@ package com.example.demo.handler
 import com.example.demo.exception.AlreadyExistException
 import com.example.demo.exception.BadRequestException
 import com.example.demo.exception.InternalErrorException
+import com.example.demo.exception.tenant.TenantNotFoudException
 import com.example.demo.model.MessageResponse
 import com.example.demo.model.ProductHttpResponse
+import com.example.demo.model.TenantHttpResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -106,4 +108,13 @@ class RestErrorHandler {
                 ProductHttpResponse.PRODUCT_INTERNAL_ERROR.httpMessage, errorList)
     }
 
+    @ExceptionHandler(TenantNotFoudException::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun handleTenantNotFoundException(exception: TenantNotFoudException): MessageResponse? {
+        val errorList = ArrayList<String>()
+        errorList.add(exception.message!!)
+
+        return MessageResponse(TenantHttpResponse.TENANT_NOT_FOUND.httpStatus,
+            TenantHttpResponse.TENANT_NOT_FOUND.httpMessage, errorList)
+    }
 }

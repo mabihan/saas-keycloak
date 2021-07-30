@@ -16,10 +16,10 @@
             <column name="id" type="int8" autoIncrement="true">
                 <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="pk_tenant"/>
             </column>
-            <column name="name" type="varchar(100)">
+            <column name="namespace" type="varchar(100)">
                 <constraints nullable="false" unique="false"/>
             </column>
-            <column name="schema" type="varchar(100)">
+            <column name="db_schema" type="varchar(100)">
                 <constraints nullable="false" unique="true"/>
             </column>
         </createTable>
