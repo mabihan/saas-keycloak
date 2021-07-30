@@ -3,35 +3,35 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>demo-multi-tenant-service</artifactId>
+    <artifactId>saas-keycloak-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>demo-multi-tenant-service</name>
+    <name>saas-keycloak-service</name>
     <description>Demo Multi Tenant Schema - Service</description>
 
     <parent>
-        <artifactId>demo-multi-tenant-schema</artifactId>
+        <artifactId>saas-keycloak-schema</artifactId>
         <groupId>com.example.demo</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <properties>
-        <demo-multi-tenant-client.version>0.0.1-SNAPSHOT</demo-multi-tenant-client.version>
-        <demo-multi-tenant-domain.version>0.0.1-SNAPSHOT</demo-multi-tenant-domain.version>
+        <saas-keycloak-client.version>0.0.1-SNAPSHOT</saas-keycloak-client.version>
+        <saas-keycloak-domain.version>0.0.1-SNAPSHOT</saas-keycloak-domain.version>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.example.demo</groupId>
-            <artifactId>demo-multi-tenant-client</artifactId>
-            <version>${demo-multi-tenant-client.version}</version>
+            <artifactId>saas-keycloak-client</artifactId>
+            <version>${saas-keycloak-client.version}</version>
         </dependency>
         <dependency>
             <groupId>com.example.demo</groupId>
-            <artifactId>demo-multi-tenant-domain</artifactId>
-            <version>${demo-multi-tenant-domain.version}</version>
+            <artifactId>saas-keycloak-domain</artifactId>
+            <version>${saas-keycloak-domain.version}</version>
         </dependency>
 
         <dependency>
@@ -78,7 +78,7 @@
     </dependencyManagement>
 
     <build>
-        <finalName>demo-multi-tenant-schema-service</finalName>
+        <finalName>saas-keycloak-schema-service</finalName>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <plugins>
