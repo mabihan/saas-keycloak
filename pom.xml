@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<groupId>com.example.demo</groupId>
-	<artifactId>demo-multi-tenant-schema</artifactId>
+	<artifactId>saas-keycloak-schema</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>demo-multi-tenant-schema</name>
+	<name>saas-keycloak-schema</name>
 	<description>Demo project for Spring Boot with Kotlin, Keycloak and Multi Tenant Schema strategy</description>
 
 	<parent>
@@ -18,9 +18,9 @@
 	</parent>
 
 	<modules>
-		<module>demo-multi-tenant-client</module>
-		<module>demo-multi-tenant-domain</module>
-		<module>demo-multi-tenant-service</module>
+		<module>saas-keycloak-client</module>
+		<module>saas-keycloak-domain</module>
+		<module>saas-keycloak-service</module>
 	</modules>
 
 	<properties>
