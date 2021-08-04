@@ -2,6 +2,8 @@
 Demo project for Spring Boot with Kotlin, Keycloak 11, Multi Tenant by Schema and Liquibase.
 Forked from [CarinaPetravicius/keycloak-multi-tenant-schema](https://github.com/CarinaPetravicius/keycloak-multi-tenant-schema)
 
+![Angular frontend](https://raw.githubusercontent.com/mabihan/saas-keycloak/feature/angular-frontend/public/screeshots/angular-home.png)
+
 ### 🛠 Project Setup
 
 #### Docker configuration

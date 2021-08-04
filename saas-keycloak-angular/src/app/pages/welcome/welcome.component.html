@@ -1,0 +1,26 @@
+<section id="hero" class="d-flex align-items-center">
+  <div class="container">
+    <div class="row d-flex justify-content-between">
+      <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+        <h1><img style="height: 2.5rem;margin-top: -0.2em;" src="assets/emojii/waving-hand.png" alt="waving-hand">&nbsp;Welcome to MyLittleSaasApplication
+        !</h1>
+        <h4>A SaaS platform boilerplate using Spring Boot, Kotlin, Keycloak and Angular.</h4>
+          <form class="form-inline row mt-3">
+            <div class="form-group mb-2 col-8">
+              <input type="text" class="form-control w-100" id="inputTeam" placeholder="Your team name">
+            </div>
+            <button type="submit" class="btn btn-primary col-3 mb-2">Start now</button>
+          </form>
+          <small id="inputTeamHelpBlock" class="form-text text-muted">
+            Already using <b>MyLittleSaasApplication</b> ? <a routerLink="/app">Access the app</a> here
+          </small>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 d-none d-lg-block">
+        <img *ngIf="this.randomImageIndex == 1" src="assets/hero/cloud-sync.svg" class="img-fluid animated" alt="">
+        <img *ngIf="this.randomImageIndex == 2" src="assets/hero/confirmed.svg" class="img-fluid animated" alt="">
+        <img *ngIf="this.randomImageIndex == 3" src="assets/hero/online.svg" class="img-fluid animated" alt="">
+        <img *ngIf="this.randomImageIndex == 4" src="assets/hero/selfie.svg" class="img-fluid animated" alt="">
+      </div>
+    </div>
+  </div>
+</section>
