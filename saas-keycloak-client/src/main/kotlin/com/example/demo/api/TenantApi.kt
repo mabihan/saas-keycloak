@@ -32,5 +32,9 @@ interface TenantApi {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tenants")
-    fun getAllTenants(): Array<TenantResponse>
+    fun getAllTenants(size: Int, page: Int): List<TenantResponse>
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/tenants")
+    fun deleteAllTenants(): MessageResponse
 }

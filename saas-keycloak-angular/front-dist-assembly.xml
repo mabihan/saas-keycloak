@@ -1,0 +1,17 @@
+<assembly>
+  <id>dist</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>dist</directory>
+      <!--<excludes>-->
+        <!--<exclude>source/**</exclude>-->
+        <!--<exclude>resources-client/**</exclude>-->
+      <!--</excludes>-->
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
+  </fileSets>
+</assembly>

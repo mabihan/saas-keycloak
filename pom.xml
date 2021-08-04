@@ -21,11 +21,14 @@
 		<module>saas-keycloak-client</module>
 		<module>saas-keycloak-domain</module>
 		<module>saas-keycloak-service</module>
+		<module>saas-keycloak-angular</module>
 	</modules>
 
 	<properties>
 		<java.version>14</java.version>
 		<kotlin.version>1.5.20</kotlin.version>
+		<node.version>v14.16.1</node.version>
+		<npm.version>6.14.12</npm.version>
 	</properties>
 
 	<dependencies>
@@ -61,6 +64,13 @@
 		<dependency>
 			<groupId>org.keycloak</groupId>
 			<artifactId>keycloak-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-maven-plugin</artifactId>
+			<version>1.5.21</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
