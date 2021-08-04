@@ -2,11 +2,23 @@
 Demo project for Spring Boot with Kotlin, Keycloak 11, Multi Tenant by Schema and Liquibase.
 Forked from [CarinaPetravicius/keycloak-multi-tenant-schema](https://github.com/CarinaPetravicius/keycloak-multi-tenant-schema)
 
-### Project Setup
+![Angular frontend](https://raw.githubusercontent.com/mabihan/saas-keycloak/feature/angular-frontend/public/screeshots/angular-home.png)
 
-- Run 'docker-compose up', to start Postgres and Keycloak in a docker container.
+### 🛠 Project Setup
+
+#### Docker configuration
+- If you want, edit the username and password for keycloak and databases
+- Run `docker-compose up`
+
+#### Mail configuration for master Realm
 - Enter in 'http://localhost:8080/auth/' and click in 'Administration Console'.
-- Enter with user name 'admin' and password '123456'. Does not set this password in production environment.
+- Enter with username previously defined in the docker-compose file.
+- Navigate to Master Realm > Email
+- Fill the form with the following data :
+    - **Host**: mailhog
+    - **Port**: 8025
+    - **From**: noreply@example.com
+- Press the "Test" button to validate SMTP configuration : An email should be caught in http://localhost:8026/
 
 ##### Create a new Realm instance:
 - Name the Realm as 'company_master'.

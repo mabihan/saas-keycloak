@@ -1,23 +1,34 @@
 package com.example.demo.controller
 
 import com.example.demo.api.TenantApi
-import com.example.demo.model.*
+import com.example.demo.gateway.database.translator.TenantDBToTenantDomainTranslator
+import com.example.demo.model.MessageResponse
+import com.example.demo.model.TenantHttpResponse
+import com.example.demo.model.TenantRequest
+import com.example.demo.model.TenantResponse
 import com.example.demo.translator.TenantDomainToTenantResponseTranslator
 import com.example.demo.translator.TenantRequestToTenantDomainTranslator
 import com.example.demo.usecase.CreateTenantUseCase
+import com.example.demo.usecase.DeleteAllTenantsUseCase
+import com.example.demo.usecase.GetAllTenantsUseCase
 import com.example.demo.usecase.GetTenantByNamespaceUseCase
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.data.domain.PageRequest
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.security.Principal
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CompletionStage
+import java.util.function.Supplier
+import java.util.stream.Collector
+import java.util.stream.Collectors.toList
 
 @RestController
 class TenantController(
     private val createTenantUseCase: CreateTenantUseCase,
-    private val getTenantByNamespaceUseCase: GetTenantByNamespaceUseCase
+    private val getTenantByNamespaceUseCase: GetTenantByNamespaceUseCase,
+    private val getAllTenantsUseCase: GetAllTenantsUseCase,
+    private val deleteAllTenantsUseCase: DeleteAllTenantsUseCase
     ) : TenantApi {
 
     private val log: Logger = LoggerFactory.getLogger(TenantController::class.java)
@@ -38,7 +49,18 @@ class TenantController(
             .thenApplyAsync { TenantDomainToTenantResponseTranslator().translate(it) }
     }
 
-    override fun getAllTenants(): Array<TenantResponse> {
-        TODO("Not yet implemented")
+    override fun getAllTenants(@RequestParam(defaultValue = "20") size: Int,
+                               @RequestParam(defaultValue = "0") page: Int): List<TenantResponse> {
+
+        val pageRequest = PageRequest.of(page, size)
+
+        return getAllTenantsUseCase.execute(pageRequest).stream()
+            .map { tenantDomain -> TenantDomainToTenantResponseTranslator().translate(tenantDomain) }
+            .collect(toList())
+    }
+
+    override fun deleteAllTenants(): MessageResponse {
+        deleteAllTenantsUseCase.execute()
+        return MessageResponse(TenantHttpResponse.TENANT_DELETED.httpStatus, TenantHttpResponse.TENANT_DELETED.httpMessage)
     }
 }
