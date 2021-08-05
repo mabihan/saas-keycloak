@@ -6,7 +6,6 @@ import { InternalComponent } from './internal/internal.component';
 import { NzLayoutModule } from "ng-zorro-antd/layout";
 import { AppRoutingModule } from "../app-routing.module";
 import { NzMenuModule } from "ng-zorro-antd/menu";
-import { IconsProviderModule } from "../icons-provider.module";
 import { NzIconModule } from "ng-zorro-antd/icon";
 import { IconDefinition } from "@ant-design/icons-angular";
 import {
@@ -40,7 +39,6 @@ const icons: IconDefinition[] = [
     NzLayoutModule,
     AppRoutingModule,
     NzMenuModule,
-    IconsProviderModule,
     NzIconModule.forRoot(icons),
   ]
 })
