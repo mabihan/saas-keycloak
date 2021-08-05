@@ -15,6 +15,7 @@ const noMenuRoutes = [
 })
 export class AppComponent implements OnInit {
   internalContent: boolean = true;
+  title: string = "saas-keycloak-angular";
 
   constructor(private router: Router) {}
 

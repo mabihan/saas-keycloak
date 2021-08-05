@@ -18,6 +18,7 @@ import { ConfigInitService } from "./init/config-init.service";
 import { initializeKeycloak } from "./init/keycloak-init.factory";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { WebappModule } from './pages/webapp/webapp.module';
+import { CustomComponentsModule } from './custom-components/custom-components.module';
 
 registerLocaleData(en);
 
@@ -36,7 +37,8 @@ registerLocaleData(en);
     AuthModule,
     LayoutModule,
     KeycloakAngularModule,
-    WebappModule
+    WebappModule,
+    CustomComponentsModule,
   ],
   providers: [
     ConfigInitService,

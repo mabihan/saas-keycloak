@@ -1,0 +1,9 @@
+::ng-deep{
+  .ant-tabs-nav {
+    display: none !important;
+  }
+}
+
+nz-tabset {
+  min-height: 33vh;
+}

@@ -10,11 +10,13 @@ import { NzIconModule } from "ng-zorro-antd/icon";
 import { IconDefinition } from "@ant-design/icons-angular";
 import {
   DashboardOutline, FormOutline, GithubOutline, HeartOutline, HeartTwoTone,
-  MenuFoldOutline,
+  MenuFoldOutline, MenuUnfoldOutline,
   SlackCircleFill,
   SlackOutline,
   TwitterOutline, TwitterSquareFill
 } from "@ant-design/icons-angular/icons";
+import { NzSwitchModule } from "ng-zorro-antd/switch";
+import { FormsModule } from "@angular/forms";
 
 const icons: IconDefinition[] = [
   SlackOutline,
@@ -25,7 +27,8 @@ const icons: IconDefinition[] = [
   FormOutline,
   GithubOutline,
   HeartTwoTone,
-  TwitterSquareFill
+  TwitterSquareFill,
+  MenuUnfoldOutline
 ];
 
 @NgModule({
@@ -40,6 +43,8 @@ const icons: IconDefinition[] = [
     AppRoutingModule,
     NzMenuModule,
     NzIconModule.forRoot(icons),
+    NzSwitchModule,
+    FormsModule,
   ]
 })
 export class LayoutModule { }

@@ -1,0 +1,15 @@
+<form nz-form [formGroup]="validateForm">
+
+  <!-- Team's Time zone -->
+  <nz-form-item class="mb-0">
+    <nz-form-control [nzOffset]="6" class="mb-3">
+      <label class="text-muted">Choose a few. We'll use them to help you get up and configure MyLittleSaasApplication.</label>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="6" [nzSpan]="12" >
+      <button class="mr-2 mb-2" *ngFor="let option of this.optionsList" nz-button nzType="default" nzShape="round">{{ option }}</button>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
