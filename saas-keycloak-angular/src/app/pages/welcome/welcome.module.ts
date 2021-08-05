@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { WelcomeRoutingModule } from './welcome-routing.module';
 
@@ -12,6 +12,7 @@ import { FunctionalitiesComponent } from './functionalities/functionalities.comp
 @NgModule({
   imports: [WelcomeRoutingModule, CommonModule, NzButtonModule],
   declarations: [WelcomeComponent, HelpComponent, AboutComponent, FunctionalitiesComponent],
-  exports: [WelcomeComponent]
+  exports: [WelcomeComponent],
+  providers: []
 })
 export class WelcomeModule { }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,12 +10,14 @@ import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IconsProviderModule } from './icons-provider.module';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { AuthModule } from './pages/auth/auth.module';
-import { HomeModule } from './pages/home/home.module';
 import { LayoutModule } from './layout/layout.module';
+import { ConfigInitService } from "./init/config-init.service";
+import { initializeKeycloak } from "./init/keycloak-init.factory";
+import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
+import { WebappModule } from './pages/webapp/webapp.module';
 
 registerLocaleData(en);
 
@@ -29,14 +31,22 @@ registerLocaleData(en);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    IconsProviderModule,
     NzLayoutModule,
     NzMenuModule,
     AuthModule,
-    HomeModule,
-    LayoutModule
+    LayoutModule,
+    KeycloakAngularModule,
+    WebappModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    ConfigInitService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService, ConfigInitService],
+    },
+    { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
