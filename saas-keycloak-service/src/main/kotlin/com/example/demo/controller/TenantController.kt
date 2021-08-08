@@ -4,10 +4,7 @@ import com.example.demo.api.TenantApi
 import com.example.demo.model.*
 import com.example.demo.translator.TenantDomainToTenantResponseTranslator
 import com.example.demo.translator.TenantRequestToTenantDomainTranslator
-import com.example.demo.usecase.tenant.CreateTenantUseCase
-import com.example.demo.usecase.tenant.DeleteAllTenantsUseCase
-import com.example.demo.usecase.tenant.GetAllTenantsUseCase
-import com.example.demo.usecase.tenant.GetTenantByNamespaceUseCase
+import com.example.demo.usecase.tenant.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
@@ -22,7 +19,8 @@ class TenantController(
     private val createTenantUseCase: CreateTenantUseCase,
     private val getTenantByNamespaceUseCase: GetTenantByNamespaceUseCase,
     private val getAllTenantsUseCase: GetAllTenantsUseCase,
-    private val deleteAllTenantsUseCase: DeleteAllTenantsUseCase
+    private val deleteAllTenantsUseCase: DeleteAllTenantsUseCase,
+    private val getTenantNamespaceAvailabilityUseCase: GetTenantNamespaceAvailabilityUseCase
     ) : TenantApi {
 
     private val log: Logger = LoggerFactory.getLogger(TenantController::class.java)
@@ -58,7 +56,9 @@ class TenantController(
         return MessageResponse(TenantHttpResponse.TENANT_DELETED.httpStatus, TenantHttpResponse.TENANT_DELETED.httpMessage)
     }
 
-    override fun getNamespaceValidity(namespace: String): CompletionStage<TenantValidationResponse> {
-        TODO("Not yet implemented")
+    override fun getNamespaceValidity(namespace: String): CompletionStage<Boolean> {
+        return CompletableFuture
+            .supplyAsync { getTenantNamespaceAvailabilityUseCase.execute(namespace) }
+            .thenApplyAsync { it }
     }
 }

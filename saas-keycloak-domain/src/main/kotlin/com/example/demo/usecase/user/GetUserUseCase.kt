@@ -1,6 +1,6 @@
 package com.example.demo.usecase.user
 
-import com.example.demo.gateway.user.GetUserGateway
+import com.example.demo.gateway.keycloak.user.GetUserGateway
 import com.example.demo.model.UserDomain
 import javax.inject.Named
 

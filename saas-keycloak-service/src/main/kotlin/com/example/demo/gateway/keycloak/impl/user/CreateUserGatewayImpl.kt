@@ -1,15 +1,10 @@
 package com.example.demo.gateway.keycloak.impl.user
 
 import com.example.demo.exception.InternalErrorException
-import com.example.demo.exception.user.UserAlreadyExistException
-import com.example.demo.gateway.keycloak.repository.RealmRepository
 import com.example.demo.gateway.keycloak.repository.UserRepository
 import com.example.demo.gateway.keycloak.translator.UserDomainToKeycloakUserCreateTranslator
-import com.example.demo.gateway.user.CreateUserGateway
+import com.example.demo.gateway.keycloak.user.CreateUserGateway
 import com.example.demo.model.UserCreateDomain
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.springframework.web.reactive.function.client.WebClientResponseException
 import javax.inject.Named
 
 @Named

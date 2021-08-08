@@ -4,7 +4,7 @@ import com.example.demo.exception.tenant.TenantNotFoudException
 import com.example.demo.gateway.database.repository.TenantRepository
 import com.example.demo.gateway.keycloak.repository.UserRepository
 import com.example.demo.gateway.keycloak.translator.KeycloakUserToUserDomainTranslator
-import com.example.demo.gateway.user.GetAllUsersGateway
+import com.example.demo.gateway.keycloak.user.GetAllUsersGateway
 import com.example.demo.model.UserDomain
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

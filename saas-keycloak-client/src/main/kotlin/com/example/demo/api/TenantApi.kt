@@ -26,7 +26,7 @@ interface TenantApi {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tenant/validity")
-    fun getNamespaceValidity(namespace: String): CompletionStage<TenantValidationResponse>
+    fun getNamespaceValidity(namespace: String): CompletionStage<Boolean>
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tenant")

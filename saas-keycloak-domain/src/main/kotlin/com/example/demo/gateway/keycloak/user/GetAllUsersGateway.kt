@@ -1,4 +1,4 @@
-package com.example.demo.gateway.user
+package com.example.demo.gateway.keycloak.user
 
 import com.example.demo.model.UserDomain
 import org.springframework.data.domain.Page

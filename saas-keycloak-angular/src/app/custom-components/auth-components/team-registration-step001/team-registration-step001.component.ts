@@ -10,9 +10,11 @@ import { Observable, Observer } from "rxjs";
 export class TeamRegistrationStep001Component implements OnInit {
 
   @Input() validateForm: FormGroup
+  @Input() timeZoneList: string[]
 
   constructor(private fb: FormBuilder) {
     this.validateForm = fb.group({})
+    this.timeZoneList = []
   }
 
   ngOnInit(): void {

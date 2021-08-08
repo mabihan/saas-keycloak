@@ -1,6 +1,6 @@
 package com.example.demo.gateway.keycloak.repository.impl
 
-import com.example.demo.gateway.keycloak.model.KeycloakRealm
+import com.example.demo.gateway.keycloak.model.KeycloakRealmCreate
 import com.example.demo.gateway.keycloak.repository.RealmRepository
 import org.keycloak.admin.client.Keycloak
 import org.keycloak.representations.idm.RealmRepresentation
@@ -17,7 +17,7 @@ class RealmRepositoryApiImpl(
 
     private val log: Logger = LoggerFactory.getLogger(RealmRepository::class.java)
 
-    override fun save(realm: kotlin.String): KeycloakRealm? {
+    override fun save(realm: kotlin.String): KeycloakRealmCreate? {
 
         val realms = keycloak.realms().findAll().map { it.id }
         log.info("realms: " + realms.joinToString())

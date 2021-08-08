@@ -1,7 +1,7 @@
 package com.example.demo.gateway.keycloak.impl.realm
 
 import com.example.demo.exception.InternalErrorException
-import com.example.demo.gateway.realm.DeleteRealmGateway
+import com.example.demo.gateway.keycloak.realm.DeleteRealmGateway
 import com.example.demo.gateway.keycloak.repository.RealmRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

@@ -1,4 +1,4 @@
-package com.example.demo.gateway.realm
+package com.example.demo.gateway.keycloak.realm
 
 interface DeleteRealmGateway {
 

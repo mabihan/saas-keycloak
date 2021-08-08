@@ -3,7 +3,7 @@ package com.example.demo.gateway.keycloak.repository.impl
 import com.example.demo.config.keycloak.KeycloakRestConfig
 import com.example.demo.config.properties.ApplicationProperties
 import com.example.demo.exception.keycloak.KeycloakRestCommunicationException
-import com.example.demo.gateway.keycloak.model.KeycloakRealm
+import com.example.demo.gateway.keycloak.model.KeycloakRealmCreate
 import com.example.demo.gateway.keycloak.model.KeycloakSmtpServer
 import com.example.demo.gateway.keycloak.repository.RealmRepository
 import org.slf4j.Logger
@@ -25,9 +25,9 @@ class RealmRepositoryRestImpl(private val keycloakAuthenticatedWebClient: WebCli
 
     private val log: Logger = LoggerFactory.getLogger(RealmRepositoryRestImpl::class.java)
 
-    override fun save(realm: String): KeycloakRealm? {
+    override fun save(realm: String): KeycloakRealmCreate? {
 
-        val keycloakRealm = KeycloakRealm(id = realm, realm = realm, KeycloakSmtpServer(
+        val keycloakRealmCreate = KeycloakRealmCreate(id = realm, realm = realm, KeycloakSmtpServer(
             password = applicationProperties.keycloak.smtp.password,
             replyToDisplayName = applicationProperties.keycloak.smtp.replyToDisplayName,
             starttls = applicationProperties.keycloak.smtp.starttls,
@@ -46,11 +46,11 @@ class RealmRepositoryRestImpl(private val keycloakAuthenticatedWebClient: WebCli
             .uri("/admin/realms")
             .header(HttpHeaders.AUTHORIZATION, "bearer ${this.keycloakRestConfig.getValidAuthorization().access_token}")
             .contentType(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromValue(keycloakRealm))
+            .body(BodyInserters.fromValue(keycloakRealmCreate))
             .exchangeToMono { response: ClientResponse ->
                 if (response.statusCode() == HttpStatus.CREATED) {
                     log.info("Successfully created realm $realm in keycloak")
-                    return@exchangeToMono response.bodyToMono(KeycloakRealm::class.java)
+                    return@exchangeToMono response.bodyToMono(KeycloakRealmCreate::class.java)
                 } else {
                     throw KeycloakRestCommunicationException("Error while creating realm $realm : Got HTTP ${response.statusCode()} status code from Keycloak." )
                 } }

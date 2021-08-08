@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
-import { Observable, Observer } from "rxjs";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-team-registration-step002',
@@ -10,11 +9,9 @@ import { Observable, Observer } from "rxjs";
 export class TeamRegistrationStep002Component implements OnInit {
 
   @Input() validateForm: FormGroup
-  @Input() timeZoneList: string[]
 
   constructor(private fb: FormBuilder) {
     this.validateForm = fb.group({})
-    this.timeZoneList = []
   }
 
   ngOnInit(): void {

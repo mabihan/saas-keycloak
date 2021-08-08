@@ -3,10 +3,8 @@ package com.example.demo.gateway.keycloak.impl.user
 import com.example.demo.exception.tenant.TenantNotFoudException
 import com.example.demo.gateway.database.repository.TenantRepository
 import com.example.demo.gateway.keycloak.repository.UserRepository
-import com.example.demo.gateway.user.DoesUserExistGateway
+import com.example.demo.gateway.keycloak.user.DoesUserExistGateway
 import com.example.demo.model.UserCreateDomain
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Pageable
 import javax.inject.Named
 

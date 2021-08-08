@@ -15,6 +15,6 @@ class KeycloakProperties {
     var realm: String = ""
     var username: String = ""
     var password: String = ""
-    var foobar: FoobarProperties = FoobarProperties()
+    var client: KeycloakClientProperties = KeycloakClientProperties()
     var smtp: KeycloakSmtpProperties = KeycloakSmtpProperties()
 }
