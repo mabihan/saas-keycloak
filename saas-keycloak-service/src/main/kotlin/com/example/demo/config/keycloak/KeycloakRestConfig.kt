@@ -1,8 +1,11 @@
 package com.example.demo.config.keycloak
 
+import com.example.demo.config.properties.ApplicationProperties
 import com.example.demo.exception.keycloak.KeycloakRestCommunicationException
 import com.example.demo.gateway.keycloak.model.KeycloakAuthorization
-import lombok.Getter
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.Jwts
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -19,54 +22,87 @@ import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Mono
+import java.util.*
 import java.util.function.Consumer
 
-
-@Getter
 @Configuration
-@EnableConfigurationProperties(KeycloakAdministrationProperties::class)
+@EnableConfigurationProperties(ApplicationProperties::class)
 class KeycloakRestConfig {
 
     private val log: Logger = LoggerFactory.getLogger(KeycloakRestConfig::class.java)
 
+    lateinit var authorization: KeycloakAuthorization
+    lateinit var properties: ApplicationProperties
+
     @Bean
-    fun keycloakWebClient(administrationProperties: KeycloakAdministrationProperties): WebClient {
+    fun keycloakAuthenticatedWebClient(properties: ApplicationProperties): WebClient {
+
+        this.properties = properties
+        this.authorization = this.authorize(properties).block()!!
 
         return WebClient.builder()
-            .baseUrl(administrationProperties.authServerUrl)
+            .baseUrl(properties.keycloak.authServerUrl)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-            .defaultHeader(HttpHeaders.AUTHORIZATION,
-                "bearer ${this.authorize(administrationProperties).block()?.access_token}")
             .filter(logRequest())
             .filter(logResponse())
             .build()
-
     }
 
-    private fun authorize(administrationProperties: KeycloakAdministrationProperties): Mono<KeycloakAuthorization> {
+    fun getValidAuthorization(): KeycloakAuthorization {
+
+        if (this.isAuthorizationExpired()) {
+            log.debug("Client authorization expired")
+
+            val formData: MultiValueMap<String, String> = LinkedMultiValueMap()
+            formData.add("grant_type", "refresh_token")
+            formData.add("client_id", this.properties.keycloak.clientId)
+            formData.add("refresh_token", this.authorization.refresh_token)
+
+            this.authorization = WebClient.create(this.properties.keycloak.authServerUrl)
+                .post()
+                .uri("/realms/${this.properties.keycloak.realm}/protocol/openid-connect/token")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body(BodyInserters.fromFormData(formData))
+                .exchangeToMono { response: ClientResponse ->
+                    if (response.statusCode() == HttpStatus.OK) {
+                        log.info("Successfully refresh authorization token against ${this.properties.keycloak.authServerUrl}.")
+                        return@exchangeToMono response.bodyToMono(KeycloakAuthorization::class.java)
+                    } else {
+                        log.error(response.toString())
+                        throw KeycloakRestCommunicationException("Error while authorizing client : Got HTTP ${response.statusCode()} status code." )
+                    } }
+                .block()!!
+        }
+
+        return this.authorization
+    }
+
+    private fun authorize(properties: ApplicationProperties): Mono<KeycloakAuthorization> {
 
         val formData: MultiValueMap<String, String> = LinkedMultiValueMap()
         formData.add("grant_type", "password")
-        formData.add("client_id", administrationProperties.clientId)
-        formData.add("username", administrationProperties.username)
-        formData.add("password", administrationProperties.password)
+        formData.add("client_id", this.properties.keycloak.clientId)
+        formData.add("username", properties.keycloak.username)
+        formData.add("password", properties.keycloak.password)
 
 
-        return WebClient.create(administrationProperties.authServerUrl)
+        return WebClient.create(properties.keycloak.authServerUrl)
             .post()
-            .uri("/realms/${administrationProperties.realm}/protocol/openid-connect/token")
+            .uri("/realms/${properties.keycloak.realm}/protocol/openid-connect/token")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .body(BodyInserters.fromFormData(formData))
             .exchangeToMono { response: ClientResponse ->
                 if (response.statusCode() == HttpStatus.OK) {
-                    log.info("Successfully authorized client against ${administrationProperties.authServerUrl}.")
+                    log.info("Successfully authorized client against ${properties.keycloak.authServerUrl}.")
                     return@exchangeToMono response.bodyToMono(KeycloakAuthorization::class.java)
                 } else {
                     throw KeycloakRestCommunicationException("Error while authorizing client : Got HTTP ${response.statusCode()} status code." )
                 } }
     }
 
-    // This method returns filter function which will log request data
+    /**
+     * This method returns filter function which will log request data
+     */
     private fun logRequest(): ExchangeFilterFunction {
         return ExchangeFilterFunction.ofRequestProcessor { clientRequest: ClientRequest ->
             log.debug("Request: {} {}", clientRequest.method(), clientRequest.url())
@@ -78,7 +114,9 @@ class KeycloakRestConfig {
         }
     }
 
-    // This method returns filter function which will log response data
+    /**
+     * This method returns filter function which will log response data
+     */
     private fun logResponse(): ExchangeFilterFunction {
         return ExchangeFilterFunction.ofResponseProcessor { clientResponse: ClientResponse ->
             log.debug("Response status: {}", clientResponse.statusCode())
@@ -87,6 +125,29 @@ class KeycloakRestConfig {
                     values.forEach(Consumer { value: String? -> log.debug("{}={}",name,value) })
                 }
             Mono.just(clientResponse)
+        }
+    }
+
+    /**
+     * This method check whether the authorization token is expired.
+     */
+    private fun isAuthorizationExpired(): Boolean {
+
+        val signedToken = this.authorization.access_token
+        val tokenOnly = signedToken.substring(0, signedToken.lastIndexOf('.') + 1)
+
+        return try {
+            val expiration = (Jwts.parser().parse(tokenOnly).body as Claims).expiration
+            val remainingTime = (expiration.time -Date().time)/1000
+
+            log.debug("Client authorization will expire in $remainingTime seconds.")
+
+            false
+
+        } catch (ex: ExpiredJwtException) {
+            log.debug(ex.localizedMessage)
+
+            true
         }
     }
 }

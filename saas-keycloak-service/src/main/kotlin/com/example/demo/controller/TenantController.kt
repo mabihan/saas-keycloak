@@ -1,17 +1,13 @@
 package com.example.demo.controller
 
 import com.example.demo.api.TenantApi
-import com.example.demo.gateway.database.translator.TenantDBToTenantDomainTranslator
-import com.example.demo.model.MessageResponse
-import com.example.demo.model.TenantHttpResponse
-import com.example.demo.model.TenantRequest
-import com.example.demo.model.TenantResponse
+import com.example.demo.model.*
 import com.example.demo.translator.TenantDomainToTenantResponseTranslator
 import com.example.demo.translator.TenantRequestToTenantDomainTranslator
-import com.example.demo.usecase.CreateTenantUseCase
-import com.example.demo.usecase.DeleteAllTenantsUseCase
-import com.example.demo.usecase.GetAllTenantsUseCase
-import com.example.demo.usecase.GetTenantByNamespaceUseCase
+import com.example.demo.usecase.tenant.CreateTenantUseCase
+import com.example.demo.usecase.tenant.DeleteAllTenantsUseCase
+import com.example.demo.usecase.tenant.GetAllTenantsUseCase
+import com.example.demo.usecase.tenant.GetTenantByNamespaceUseCase
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
@@ -19,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.CompletionStage
-import java.util.function.Supplier
-import java.util.stream.Collector
 import java.util.stream.Collectors.toList
 
 @RestController
@@ -62,5 +56,9 @@ class TenantController(
     override fun deleteAllTenants(): MessageResponse {
         deleteAllTenantsUseCase.execute()
         return MessageResponse(TenantHttpResponse.TENANT_DELETED.httpStatus, TenantHttpResponse.TENANT_DELETED.httpMessage)
+    }
+
+    override fun getNamespaceValidity(namespace: String): CompletionStage<TenantValidationResponse> {
+        TODO("Not yet implemented")
     }
 }

@@ -3,10 +3,14 @@ package com.example.demo.handler
 import com.example.demo.exception.AlreadyExistException
 import com.example.demo.exception.BadRequestException
 import com.example.demo.exception.InternalErrorException
+import com.example.demo.exception.tenant.TenantAlreadyExistException
 import com.example.demo.exception.tenant.TenantNotFoudException
+import com.example.demo.exception.user.UserAlreadyExistException
+import com.example.demo.exception.user.UserNotFoundException
 import com.example.demo.model.MessageResponse
 import com.example.demo.model.ProductHttpResponse
 import com.example.demo.model.TenantHttpResponse
+import com.example.demo.model.UserHttpResponse
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -116,5 +120,35 @@ class RestErrorHandler {
 
         return MessageResponse(TenantHttpResponse.TENANT_NOT_FOUND.httpStatus,
             TenantHttpResponse.TENANT_NOT_FOUND.httpMessage, errorList)
+    }
+
+    @ExceptionHandler(TenantAlreadyExistException::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    fun handleTenantNotFoundException(exception: TenantAlreadyExistException): MessageResponse? {
+        val errorList = ArrayList<String>()
+        errorList.add(exception.message!!)
+
+        return MessageResponse(TenantHttpResponse.TENANT_ALREADY_EXIST.httpStatus,
+            TenantHttpResponse.TENANT_ALREADY_EXIST.httpMessage, errorList)
+    }
+
+    @ExceptionHandler(UserNotFoundException::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun handleUserNotFoundException(exception: UserNotFoundException): MessageResponse? {
+        val errorList = ArrayList<String>()
+        errorList.add(exception.message!!)
+
+        return MessageResponse(UserHttpResponse.USER_NOT_FOUND.httpStatus,
+            UserHttpResponse.USER_NOT_FOUND.httpMessage, errorList)
+    }
+
+    @ExceptionHandler(UserAlreadyExistException::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    fun handleUserAlreadyExistException(exception: UserAlreadyExistException): MessageResponse? {
+        val errorList = ArrayList<String>()
+        errorList.add(exception.message!!)
+
+        return MessageResponse(UserHttpResponse.USER_ALREADY_EXIST.httpStatus,
+            UserHttpResponse.USER_ALREADY_EXIST.httpMessage, errorList)
     }
 }

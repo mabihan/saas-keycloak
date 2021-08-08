@@ -3,7 +3,7 @@ package com.example.demo.controller
 import com.example.demo.api.ProductApi
 import com.example.demo.model.*
 import com.example.demo.translator.ProductRequestToProductDomainTranslator
-import com.example.demo.usecase.CreateProductUseCase
+import com.example.demo.usecase.product.CreateProductUseCase
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
