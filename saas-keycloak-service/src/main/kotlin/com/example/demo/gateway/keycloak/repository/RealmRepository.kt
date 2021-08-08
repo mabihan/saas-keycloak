@@ -1,14 +1,12 @@
 package com.example.demo.gateway.keycloak.repository
 
-import com.example.demo.gateway.keycloak.model.KeycloakRealm
-import org.keycloak.admin.client.resource.RealmResource
-import org.keycloak.representations.idm.RealmRepresentation
+import com.example.demo.gateway.keycloak.model.KeycloakRealmCreate
 import org.springframework.stereotype.Repository
 
 @Repository
 interface RealmRepository {
 
-    fun save(realm: String): KeycloakRealm?
+    fun save(realm: kotlin.String): KeycloakRealmCreate?
 
-    fun delete(realm: String)
+    fun delete(realm: kotlin.String)
 }

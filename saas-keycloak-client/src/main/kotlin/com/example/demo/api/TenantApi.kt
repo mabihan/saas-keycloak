@@ -1,8 +1,6 @@
 package com.example.demo.api
 
-import com.example.demo.model.MessageResponse
-import com.example.demo.model.TenantRequest
-import com.example.demo.model.TenantResponse
+import com.example.demo.model.*
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
@@ -25,6 +23,10 @@ interface TenantApi {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/tenant")
     fun createTenant(@Valid @RequestBody tenantRequest: TenantRequest): MessageResponse
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/tenant/validity")
+    fun getNamespaceValidity(namespace: String): CompletionStage<Boolean>
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tenant")

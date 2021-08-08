@@ -7,11 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InternalComponent implements OnInit {
 
-  isCollapsed = false;
+  isCollapsed: boolean;
 
-  constructor() { }
+  constructor() {
+    this.isCollapsed = true
+  }
 
   ngOnInit(): void {
+    this.isCollapsed = true
   }
 
 }

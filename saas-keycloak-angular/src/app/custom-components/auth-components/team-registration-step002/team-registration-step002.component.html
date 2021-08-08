@@ -1,0 +1,48 @@
+
+
+<form nz-form [formGroup]="validateForm">
+
+  <!-- User name -->
+  <nz-form-item class="mb-0">
+    <nz-form-control [nzOffset]="6">
+      <h6>Username</h6>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="6" [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="userName" placeholder="username" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Please input your username!</ng-container>
+        <ng-container *ngIf="control.hasError('duplicated')">The username is redundant!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Email -->
+  <nz-form-item class="mb-0">
+    <nz-form-control [nzOffset]="6">
+      <h6>Email</h6>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="6" [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+      <input nz-input formControlName="email" placeholder="email" type="email" />
+      <ng-template #emailErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('email')">The input is not valid E-mail!</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Please input your E-mail!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Password -->
+  <nz-form-item class="mb-0">
+    <nz-form-control [nzOffset]="6">
+      <h6>Password</h6>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="6" [nzSpan]="12" nzHasFeedback nzErrorTip="Please input your password!">
+      <input nz-input type="password" formControlName="password" />
+    </nz-form-control>
+  </nz-form-item>
+</form>
