@@ -1,3 +1,6 @@
+<button (click)="debug()">
+  Debug
+</button>
 <nz-form-item class="my-5">
   <nz-form-control *ngIf="current<3" [nzOffset]="6" [nzSpan]="12">
     <label class="text-muted">Step {{ current + 1 }} of 3</label>
@@ -5,7 +8,7 @@
   <nz-form-control [nzOffset]="6" [nzSpan]="12">
     <h1 *ngIf="current == 0">First, what's the name of your company or team ?</h1>
     <h1 *ngIf="current == 1">Then, create your personal account</h1>
-    <h1 *ngIf="current == 2">What would you like to use 🌱MyLittleSaasApplication first ?</h1>
+    <h1 *ngIf="current == 2">What would you like to use MyLittleSaasApplication first ?</h1>
     <h1 *ngIf="current == 3">We're getting  things ready, hold on a sec</h1>
   </nz-form-control>
 </nz-form-item>

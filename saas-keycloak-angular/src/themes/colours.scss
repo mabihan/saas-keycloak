@@ -1,2 +1,8 @@
 $primary: #4bb14f;
+$primary-color: $primary;
 
+.ant-btn:hover, .ant-btn:focus {
+  color: $primary;
+  background: #fff;
+  border-color: $primary;
+}

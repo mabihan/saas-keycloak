@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Observable, Observer } from "rxjs";
 import { UserService } from "../../../services/keycloak/user.service";
@@ -30,16 +30,22 @@ export class TeamRegistrationFormComponent implements OnInit {
   }
 
 
-  validateForm: FormGroup;
+  @Input() validateForm: FormGroup
+
+  debug(): void {
+    console.log("[" + this.validateForm.get('userName')?.status + "]" + "userName :" + this.validateForm.get('userName')?.value)
+    console.log("[" + this.validateForm.get('email')?.status + "]" +"email :" + this.validateForm.get('email')?.value)
+    console.log("[" + this.validateForm.get('password')?.status + "]" +"password :" + this.validateForm.get('password')?.value)
+    console.log("[" + this.validateForm.get('teamName')?.status + "]" +"teamName :" + this.validateForm.get('teamName')?.value)
+    console.log("[" + this.validateForm.get('teamTimeZone')?.status + "]" +"teamTimeZone :" + this.validateForm.get('teamTimeZone')?.value)
+  }
 
   submitForm(): void {
-
-    console.log(this.validateForm.get('userName')?.value)
-    console.log(this.validateForm.get('email')?.value)
-    console.log(this.validateForm.get('password')?.value)
-    console.log(this.validateForm.get('teamName')?.value)
-    console.log(this.validateForm.get('teamTimeZone')?.value)
-
+    console.log("[" + this.validateForm.get('userName')?.status + "]" + "userName :" + this.validateForm.get('userName')?.value)
+    console.log("[" + this.validateForm.get('email')?.status + "]" +"email :" + this.validateForm.get('email')?.value)
+    console.log("[" + this.validateForm.get('password')?.status + "]" +"password :" + this.validateForm.get('password')?.value)
+    console.log("[" + this.validateForm.get('teamName')?.status + "]" +"teamName :" + this.validateForm.get('teamName')?.value)
+    console.log("[" + this.validateForm.get('teamTimeZone')?.status + "]" +"teamTimeZone :" + this.validateForm.get('teamTimeZone')?.value)
 
     for (const key in this.validateForm.controls) {
       if (this.validateForm.controls.hasOwnProperty(key)) {
@@ -59,9 +65,9 @@ export class TeamRegistrationFormComponent implements OnInit {
       setTimeout(() => {
         if (control.value === 'JasonWood') {
           // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
+          observer.next({ });
         } else {
-          observer.next(null);
+          observer.next({ });
         }
         observer.complete();
       }, 1000);
@@ -80,13 +86,6 @@ export class TeamRegistrationFormComponent implements OnInit {
   teamNameAsyncValidator = (control: FormControl) =>
     new Observable((observer: Observer<ValidationErrors | null>) => {
       setTimeout(() => {
-        if (control.value === 'JasonWood') {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
       }, 1000);
     });
 
@@ -96,9 +95,9 @@ export class TeamRegistrationFormComponent implements OnInit {
       setTimeout(() => {
         if (!this.timeZoneList.includes(control.value)) {
           // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, invalid: true });
+          observer.next({ error: true, required: true });
         } else {
-          observer.next(null);
+          observer.next({ });
         }
         observer.complete();
       }, 1000);
