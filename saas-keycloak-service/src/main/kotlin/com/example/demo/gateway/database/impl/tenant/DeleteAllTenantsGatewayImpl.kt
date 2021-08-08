@@ -26,11 +26,11 @@ class DeleteAllTenantsGatewayImpl(private val tenantRepository: TenantRepository
         try {
 
             this.tenantRepository.findAll().forEach {
-                val query = entityManager.createNativeQuery("DROP SCHEMA " + it.schema + ";")
+                val query = entityManager.createNativeQuery("DROP SCHEMA " + it.schemaName + ";")
                 query.executeUpdate()
                 this.tenantRepository.delete(it)
                 log.warn("Deleted ${it.namespace} in database.")
-                this.realmRepository.delete(it.namespace)
+                this.realmRepository.delete(it.keycloakRealm)
                 log.warn("Deleted ${it.namespace} in keycloak.")
             }
         } catch (ex: Exception) {

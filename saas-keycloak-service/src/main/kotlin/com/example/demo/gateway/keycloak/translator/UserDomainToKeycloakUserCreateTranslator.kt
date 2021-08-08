@@ -11,7 +11,7 @@ class UserDomainToKeycloakUserCreateTranslator {
             firstName = userCreateDomain.firstName,
             lastName = userCreateDomain.lastName,
             email = userCreateDomain.email,
-            username = userCreateDomain.email,
+            username = userCreateDomain.username,
             enabled = true,
             totp = false,
             emailVerified = false

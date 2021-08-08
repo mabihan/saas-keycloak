@@ -4,6 +4,7 @@ import com.example.demo.exception.AlreadyExistException
 import com.example.demo.exception.BadRequestException
 import com.example.demo.exception.InternalErrorException
 import com.example.demo.exception.tenant.TenantAlreadyExistException
+import com.example.demo.exception.tenant.TenantNamespaceInvalidException
 import com.example.demo.exception.tenant.TenantNotFoudException
 import com.example.demo.exception.user.UserAlreadyExistException
 import com.example.demo.exception.user.UserNotFoundException
@@ -130,6 +131,16 @@ class RestErrorHandler {
 
         return MessageResponse(TenantHttpResponse.TENANT_ALREADY_EXIST.httpStatus,
             TenantHttpResponse.TENANT_ALREADY_EXIST.httpMessage, errorList)
+    }
+
+    @ExceptionHandler(TenantNamespaceInvalidException::class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    fun handleTenantNotFoundException(exception: TenantNamespaceInvalidException): MessageResponse? {
+        val errorList = ArrayList<String>()
+        errorList.add(exception.message!!)
+
+        return MessageResponse(TenantHttpResponse.TENANT_NOT_ACCEPTABLE.httpStatus,
+            TenantHttpResponse.TENANT_NOT_ACCEPTABLE.httpMessage, errorList)
     }
 
     @ExceptionHandler(UserNotFoundException::class)

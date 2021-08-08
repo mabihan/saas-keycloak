@@ -12,12 +12,13 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.util.concurrent.CompletionStage
 import javax.validation.Valid
+import javax.validation.constraints.Email
 
 @RequestMapping("/v1/")
 @Api(tags = ["User"])
 interface UserApi {
 
-    @ApiOperation(value = "Create a user", notes = "Create a user in keycloak")
+    @ApiOperation(value = "Create a user", notes = "Create a user.")
     @ApiResponses(value = [ApiResponse(code = 201, message = "Created", response = MessageResponse::class),
         ApiResponse(code = 208, message = "User already exist", response = MessageResponse::class),
         ApiResponse(code = 400, message = "Bad request", response = MessageResponse::class),
@@ -26,22 +27,22 @@ interface UserApi {
     @PostMapping("/{tenantNamespace}/user/")
     fun createUser(@PathVariable tenantNamespace: String, @Valid @RequestBody userRequest: UserRequest): MessageResponse
 
-    @ApiOperation(value = "Update a user", notes = "Update an existing user in keycloak")
+    @ApiOperation(value = "Update a user", notes = "Update an existing user.")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{tenantNamespace}/user")
     fun updateUser(@PathVariable tenantNamespace: String, @Valid @RequestBody userRequest: UserRequest): MessageResponse
 
-    @ApiOperation(value = "Get user details", notes = "Get user details from keycloak")
+    @ApiOperation(value = "Get user details", notes = "Get user details.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{tenantNamespace}/user//{id}")
     fun getUser(@PathVariable tenantNamespace: String, @PathVariable id: String): CompletionStage<UserResponse>
 
-    @ApiOperation(value = "Get username or email validity", notes = "Get username or email validity from keycloak")
+    @ApiOperation(value = "Get username or email validity", notes = "Get username or email validity.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{tenantNamespace}/user/validity")
     fun getUserValidity(@PathVariable tenantNamespace: String, username: String?, email: String?): CompletionStage<UserValidationResponse>
 
-    @ApiOperation(value = "Get all users", notes = "Get username or email validity from keycloak")
+    @ApiOperation(value = "Get all users", notes = "Get all from tenant.")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{tenantNamespace}/users")
     fun getAllUsers(@PathVariable tenantNamespace: String, size: Int, page: Int): Any

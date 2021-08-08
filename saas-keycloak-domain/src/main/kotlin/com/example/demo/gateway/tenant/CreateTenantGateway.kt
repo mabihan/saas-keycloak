@@ -1,9 +1,9 @@
 package com.example.demo.gateway.tenant
 
-import com.example.demo.model.TenantDomain
+import com.example.demo.model.TenantCreateDomain
 
 interface CreateTenantGateway {
 
-    fun execute(tenantDomain: TenantDomain)
+    fun execute(tenantCreateDomain: TenantCreateDomain)
 
 }

@@ -4,7 +4,7 @@ import com.example.demo.exception.InternalErrorException
 import com.example.demo.gateway.tenant.CreateTenantGateway
 import com.example.demo.gateway.database.repository.TenantRepository
 import com.example.demo.gateway.database.translator.TenantDomainToTenantDBTranslator
-import com.example.demo.model.TenantDomain
+import com.example.demo.model.TenantCreateDomain
 import liquibase.integration.spring.SpringLiquibase
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -26,11 +26,11 @@ class CreateTenantGatewayImpl(  private val tenantRepository: TenantRepository,
      * Create a tenant in the master database and create a specific schema
      * TODO : Improve error handling when creating schema and running liquibase
      */
-    override fun execute(tenantDomain: TenantDomain) {
+    override fun execute(tenantCreateDomain: TenantCreateDomain) {
         try {
-            val tenantDb = tenantRepository.save(TenantDomainToTenantDBTranslator().translate(tenantDomain))
+            val tenantDb = tenantRepository.save(TenantDomainToTenantDBTranslator().translate(tenantCreateDomain))
 
-            val query = entityManager.createNativeQuery("CREATE SCHEMA " + tenantDb.schema + ";")
+            val query = entityManager.createNativeQuery("CREATE SCHEMA " + tenantDb.schemaName + ";")
             query.executeUpdate()
 
             val info = entityManager.entityManagerFactory as EntityManagerFactoryInfo
@@ -39,7 +39,7 @@ class CreateTenantGatewayImpl(  private val tenantRepository: TenantRepository,
             val liquibase = SpringLiquibase()
             liquibase.dataSource = dS
             liquibase.changeLog = "classpath:/db/changelog/db.changelog-tenants.yaml"
-            liquibase.defaultSchema = tenantDb.schema
+            liquibase.defaultSchema = tenantDb.schemaName
             liquibase.setShouldRun(true)
 
             liquibase.afterPropertiesSet()

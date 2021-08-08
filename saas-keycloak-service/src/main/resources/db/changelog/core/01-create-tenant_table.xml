@@ -13,14 +13,20 @@
             </not>
         </preConditions>
         <createTable tableName="tenant" remarks="A table of schemas name">
-            <column name="id" type="int8" autoIncrement="true">
+            <column name="uuid" type="binary(16)">
                 <constraints nullable="false" unique="true" primaryKey="true" primaryKeyName="pk_tenant"/>
             </column>
             <column name="namespace" type="varchar(100)">
                 <constraints nullable="false" unique="false"/>
             </column>
-            <column name="db_schema" type="varchar(100)">
+            <column name="schema_name" type="varchar(100)">
                 <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="keycloak_realm" type="varchar(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="time_zone" type="varchar(100)">
+                <constraints nullable="false" unique="false"/>
             </column>
         </createTable>
     </changeSet>

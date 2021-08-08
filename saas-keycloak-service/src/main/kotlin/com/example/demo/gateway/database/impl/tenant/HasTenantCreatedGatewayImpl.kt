@@ -3,7 +3,6 @@ package com.example.demo.gateway.database.impl.tenant
 import com.example.demo.exception.InternalErrorException
 import com.example.demo.gateway.tenant.HasTenantCreatedGateway
 import com.example.demo.gateway.database.repository.TenantRepository
-import com.example.demo.model.TenantDomain
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.lang.Exception

@@ -7,5 +7,6 @@ import kotlin.String
 data class KeycloakRealmCreate(
     val id: String,
     val realm: String,
+    val displayName: String,
     val smtpServer: KeycloakSmtpServer
 )

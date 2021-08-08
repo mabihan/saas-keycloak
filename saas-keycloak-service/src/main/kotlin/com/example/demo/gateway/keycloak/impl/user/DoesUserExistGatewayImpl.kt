@@ -5,6 +5,7 @@ import com.example.demo.gateway.database.repository.TenantRepository
 import com.example.demo.gateway.keycloak.repository.UserRepository
 import com.example.demo.gateway.keycloak.user.DoesUserExistGateway
 import com.example.demo.model.UserCreateDomain
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.data.domain.Pageable
 import javax.inject.Named
 
@@ -14,35 +15,35 @@ class DoesUserExistGatewayImpl(private val userRepository: UserRepository,
 
     override fun execute(tenantNamespace: String, userCreateDomain: UserCreateDomain): Boolean {
 
-        var userAlreadyExist = false
+        try {
+            var userAlreadyExist = false
 
-        val tenantDb = this.tenantRepository.findByNamespace(tenantNamespace)
+            val tenantDb = this.tenantRepository.findByNamespace(tenantNamespace)
 
-        if (tenantDb.id == null){
+            val keycloakUserByEmail = this.userRepository.findByEmail(
+                tenantDb.namespace,
+                userCreateDomain.email,
+                Pageable.ofSize(1)
+            )
+
+            val keycloakUserByUsername = this.userRepository.findByUsername(
+                tenantDb.namespace,
+                userCreateDomain.username,
+                Pageable.ofSize(1)
+            )
+
+            if (keycloakUserByEmail.totalElements > 0) {
+                userAlreadyExist = true
+            }
+
+            if (keycloakUserByUsername.totalElements > 0) {
+                userAlreadyExist = true
+            }
+
+            return userAlreadyExist
+        } catch (ex: EmptyResultDataAccessException) {
             throw TenantNotFoudException("Tenant $tenantNamespace not found." )
         }
-
-        val keycloakUserByEmail = this.userRepository.findByEmail(
-            tenantDb.namespace,
-            userCreateDomain.email,
-            Pageable.ofSize(1)
-        )
-
-        val keycloakUserByUsername = this.userRepository.findByUsername(
-            tenantDb.namespace,
-            userCreateDomain.username,
-            Pageable.ofSize(1)
-        )
-
-        if (keycloakUserByEmail.totalElements > 0) {
-            userAlreadyExist = true
-        }
-
-        if (keycloakUserByUsername.totalElements > 0) {
-            userAlreadyExist = true
-        }
-
-        return userAlreadyExist
     }
 
 
@@ -50,41 +51,42 @@ class DoesUserExistGatewayImpl(private val userRepository: UserRepository,
 
         var userAlreadyExist = false
 
-        val tenantDb = this.tenantRepository.findByNamespace(tenantNamespace)
+        try {
+            val tenantDb = this.tenantRepository.findByNamespace(tenantNamespace)
 
-        if (tenantDb.id == null){
+            if (email != null) {
+                if (email.isNotEmpty()) {
+                    val keycloakUserByEmail = this.userRepository.findByEmail(
+                        tenantDb.namespace,
+                        email,
+                        Pageable.ofSize(1)
+                    )
+
+                    if (keycloakUserByEmail.totalElements > 0) {
+                        userAlreadyExist = true
+                    }
+                }
+            }
+
+
+            if (username != null) {
+                if (username.isNotEmpty()) {
+                    val keycloakUserByEmail = this.userRepository.findByEmail(
+                        tenantDb.namespace,
+                        username,
+                        Pageable.ofSize(1)
+                    )
+
+                    if (keycloakUserByEmail.totalElements > 0) {
+                        userAlreadyExist = true
+                    }
+                }
+            }
+
+            return userAlreadyExist
+
+        } catch (ex: EmptyResultDataAccessException) {
             throw TenantNotFoudException("Tenant $tenantNamespace not found." )
         }
-
-        if (email != null) {
-            if (email.isNotEmpty()) {
-                val keycloakUserByEmail = this.userRepository.findByEmail(
-                    tenantDb.namespace,
-                    email,
-                    Pageable.ofSize(1)
-                )
-
-                if (keycloakUserByEmail.totalElements > 0) {
-                    userAlreadyExist = true
-                }
-            }
-        }
-
-
-        if (username != null) {
-            if (username.isNotEmpty()) {
-                val keycloakUserByEmail = this.userRepository.findByEmail(
-                    tenantDb.namespace,
-                    username,
-                    Pageable.ofSize(1)
-                )
-
-                if (keycloakUserByEmail.totalElements > 0) {
-                    userAlreadyExist = true
-                }
-            }
-        }
-
-        return userAlreadyExist
     }
 }

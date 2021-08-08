@@ -6,7 +6,12 @@ import com.example.demo.model.TenantResponse
 class TenantDomainToTenantResponseTranslator {
 
     fun translate(tenantDomain: TenantDomain): TenantResponse {
-        return TenantResponse(namespace = tenantDomain.namespace, contact = "not implemented", createdDate = tenantDomain.createdDate)
+        return TenantResponse(
+            uuid = tenantDomain.uuid,
+            namespace = tenantDomain.namespace,
+            keycloakRealm = tenantDomain.keycloakRealm,
+            timeZone = tenantDomain.timeZone.toString()
+        )
     }
 
 }

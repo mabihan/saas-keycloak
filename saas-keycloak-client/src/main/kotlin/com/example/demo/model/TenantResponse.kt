@@ -6,11 +6,14 @@ import java.time.LocalDateTime
 
 data class TenantResponse(
         @ApiModelProperty(required = true)
+        val uuid: String,
+
+        @ApiModelProperty(required = true)
         val namespace: String,
 
         @ApiModelProperty(required = true)
-        val contact: String,
+        val keycloakRealm: String,
 
-        @JsonFormat(pattern = "YYYY-MM-dd'T'HH:mm:ss")
-        val createdDate: LocalDateTime,
+        @ApiModelProperty(required = true)
+        val timeZone: String,
 )

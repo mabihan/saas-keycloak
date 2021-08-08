@@ -2,10 +2,8 @@ package com.example.demo.model
 
 import java.time.ZoneOffset
 
-data class TenantDomain(
-        val uuid: String,
+data class TenantCreateDomain(
         val namespace: String,
-        var schemaName: String,
-        var keycloakRealm: String,
+        var sanitizedNamespace: String,
         val timeZone: ZoneOffset,
 )

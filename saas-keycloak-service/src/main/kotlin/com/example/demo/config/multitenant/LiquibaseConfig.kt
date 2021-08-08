@@ -31,7 +31,7 @@ class LiquibaseConfig {
         val liquibase = MultiTenantSpringLiquibase()
         liquibase.dataSource = dataSource
         liquibase.changeLog = "classpath:/db/changelog/db.changelog-tenants.yaml"
-        val schemas = tenantRepository.findAll().stream().map(TenantDB::schema).collect(Collectors.toList())
+        val schemas = tenantRepository.findAll().stream().map(TenantDB::schemaName).collect(Collectors.toList())
         liquibase.schemas = schemas
         liquibase.isShouldRun = true
         return liquibase

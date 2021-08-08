@@ -12,8 +12,7 @@ data class TenantRequest(
         val namespace: String,
 
         @ApiModelProperty(required = true)
-        @field:NotBlank(message = "The contact email must be informed")
-        @field:Email(message = "The contact must be a valid email")
-        val email: String,
+        @field:NotBlank(message = "The time zone must be informed")
+        val timeZone: String,
 
         )

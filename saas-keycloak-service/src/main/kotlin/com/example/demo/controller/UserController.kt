@@ -5,9 +5,11 @@ import com.example.demo.model.*
 import com.example.demo.translator.TenantDomainToTenantResponseTranslator
 import com.example.demo.translator.UserDomainToUserResponseTranslator
 import com.example.demo.translator.UserRequestToUserCreateDomainTranslator
+import com.example.demo.translator.UserValidationDomainToUserValidationResponseTranslator
 import com.example.demo.usecase.user.CreateUserUseCase
 import com.example.demo.usecase.user.GetAllUsersUseCase
 import com.example.demo.usecase.user.GetUserUseCase
+import com.example.demo.usecase.user.GetUserValidityUseCase
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
@@ -19,7 +21,8 @@ import java.util.concurrent.CompletionStage
 @RestController
 class UserController(private val createUserUseCase: CreateUserUseCase,
                      private val getUserUseCase: GetUserUseCase,
-                     private val getAllUsersUseCase: GetAllUsersUseCase): UserApi {
+                     private val getAllUsersUseCase: GetAllUsersUseCase,
+                     private val getUserValidityUseCase: GetUserValidityUseCase): UserApi {
 
     private val log: Logger = LoggerFactory.getLogger(UserController::class.java)
 
@@ -44,7 +47,9 @@ class UserController(private val createUserUseCase: CreateUserUseCase,
     }
 
     override fun getUserValidity(tenantNamespace: String, username: String?, email: String?): CompletionStage<UserValidationResponse> {
-        TODO("Not yet implemented")
+        return CompletableFuture
+            .supplyAsync { this.getUserValidityUseCase.execute(tenantNamespace, username, email)}
+            .thenApplyAsync { UserValidationDomainToUserValidationResponseTranslator().translate(it) }
     }
 
     override fun getAllUsers(tenantNamespace: String, size: Int, page: Int): Page<UserResponse> {

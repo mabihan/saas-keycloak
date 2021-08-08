@@ -1,9 +1,9 @@
 package com.example.demo.gateway.keycloak.realm
 
-import com.example.demo.model.TenantDomain
+import com.example.demo.model.TenantCreateDomain
 
 interface CreateRealmGateway {
 
-    fun execute(tenantDomain: TenantDomain)
+    fun execute(tenantCreateDomain: TenantCreateDomain)
 
 }

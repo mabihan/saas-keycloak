@@ -20,7 +20,7 @@ class TenantController(
     private val getTenantByNamespaceUseCase: GetTenantByNamespaceUseCase,
     private val getAllTenantsUseCase: GetAllTenantsUseCase,
     private val deleteAllTenantsUseCase: DeleteAllTenantsUseCase,
-    private val getTenantNamespaceAvailabilityUseCase: GetTenantNamespaceAvailabilityUseCase
+    private val getTenantNamespaceValidityUseCase: GetTenantNamespaceValidityUseCase
     ) : TenantApi {
 
     private val log: Logger = LoggerFactory.getLogger(TenantController::class.java)
@@ -58,7 +58,7 @@ class TenantController(
 
     override fun getNamespaceValidity(namespace: String): CompletionStage<Boolean> {
         return CompletableFuture
-            .supplyAsync { getTenantNamespaceAvailabilityUseCase.execute(namespace) }
+            .supplyAsync { getTenantNamespaceValidityUseCase.execute(namespace) }
             .thenApplyAsync { it }
     }
 }
