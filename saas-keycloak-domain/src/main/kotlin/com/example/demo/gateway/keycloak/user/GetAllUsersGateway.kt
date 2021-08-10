@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable
 
 interface GetAllUsersGateway {
 
-    fun execute(tenantNamespace: String, pageable: Pageable): Page<UserDomain>
+    fun execute(tenantUuid: String, pageable: Pageable): Page<UserDomain>
 
 }

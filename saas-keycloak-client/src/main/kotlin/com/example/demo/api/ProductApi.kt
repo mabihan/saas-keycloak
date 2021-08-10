@@ -10,6 +10,7 @@ import javax.validation.Valid
 
 @RequestMapping("/v1")
 @Api(tags = ["Product"])
+@CrossOrigin(origins = ["http://localhost:4200"])
 interface ProductApi {
 
     @ApiOperation(value = "Create a product", notes = "Create a product")

@@ -1,11 +1,17 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2021-08-08 23:14:14.
+// Generated using typescript-generator version 2.32.889 on 2021-08-10 10:52:45.
 
 export interface MessageResponse {
     httpCode: number;
     message: string;
     errors: string[] | null;
+}
+
+export interface ObjectValidationResponse {
+    valid: boolean;
+    message: string;
+    error: string;
 }
 
 export interface ProductRequest {
@@ -31,11 +37,6 @@ export interface TenantResponse {
     timeZone: string;
 }
 
-export interface TenantValidationResponse {
-    valid: boolean;
-    message: string;
-}
-
 export interface UserRequest {
     firstName: string;
     lastName: string;
@@ -45,7 +46,8 @@ export interface UserRequest {
 }
 
 export interface UserResponse {
-    id: string;
+    uuid: string;
+    tenantUuid: string;
     firstName: string;
     lastName: string;
     email: string;

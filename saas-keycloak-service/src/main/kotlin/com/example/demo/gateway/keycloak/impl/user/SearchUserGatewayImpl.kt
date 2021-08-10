@@ -1,6 +1,5 @@
 package com.example.demo.gateway.keycloak.impl.user
 
-import com.example.demo.exception.tenant.TenantNotFoudException
 import com.example.demo.exception.user.UserNotFoundException
 import com.example.demo.gateway.database.repository.TenantRepository
 import com.example.demo.gateway.keycloak.repository.UserRepository

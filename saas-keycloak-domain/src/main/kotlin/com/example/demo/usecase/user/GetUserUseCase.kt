@@ -7,7 +7,7 @@ import javax.inject.Named
 @Named
 class GetUserUseCase(private val getUserGateway: GetUserGateway) {
 
-    fun execute(tenantNamespace: String, id: String): UserDomain {
-        return this.getUserGateway.execute(tenantNamespace, id)
+    fun execute(tenantUuid: String, id: String): UserDomain {
+        return this.getUserGateway.execute(tenantUuid, id)
     }
 }

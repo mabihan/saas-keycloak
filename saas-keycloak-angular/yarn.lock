@@ -1316,6 +1316,13 @@
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
   integrity sha512-K5K+yml8LTo9bWJI/rECfIPrGgxdpeNbj+d53lwN4QjW1MCwlkhUms+gtdzigTeUyBr09+u8BwOIY3MXvHdcsA==
 
+"@types/tape@^4.13.0":
+  version "4.13.2"
+  resolved "https://registry.yarnpkg.com/@types/tape/-/tape-4.13.2.tgz#77215c065b1c7840da3ca5e061337bb4c7258122"
+  integrity sha512-V1ez/RtYRGN9cNYApw5xf27DpMkTB0033X6a2i3KUmKhSojBfbWN0i3EgZxboUG96WJLHLdOyZ01aiZwVW5aSA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/webpack-sources@^0.1.5":
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-0.1.9.tgz#da69b06eb34f6432e6658acb5a6893c55d983920"
@@ -1608,6 +1615,13 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
+
+angular-password-strength-meter@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/angular-password-strength-meter/-/angular-password-strength-meter-3.0.1.tgz#258ca9115e730f48033d572d85a538f8838ef778"
+  integrity sha512-GTI+IEVOWUlQqvhYRvNae+iZXblcVODOKk0Oa/SLbkTle8jYEAn0UGUrkIPPNZFtQPgV0qmW9PonpTecfZ0Gxg==
+  dependencies:
+    tslib "^2.0.0"
 
 ansi-colors@4.1.1:
   version "4.1.1"
@@ -4249,6 +4263,11 @@ globby@^6.1.0:
     object-assign "^4.0.1"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
+
+google-timezones-json@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/google-timezones-json/-/google-timezones-json-1.0.2.tgz#6800000d7ebc2dd660611aad8c1c68196db78cab"
+  integrity sha512-UWXQ7BpSCW8erDespU2I4cri22xsKgwOCyhsJal0OJhi2tFpwJpsYNJt4vCiFPL1p2HzCGiS713LKpNR25n9Kg==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.3, graceful-fs@^4.2.4:
   version "4.2.6"
@@ -9381,3 +9400,10 @@ zone.js@~0.10.2, zone.js@~0.10.3:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.10.3.tgz#3e5e4da03c607c9dcd92e37dd35687a14a140c16"
   integrity sha512-LXVLVEq0NNOqK/fLJo3d0kfzd4sxwn2/h67/02pjCjfKDxgx1i9QqpvtHD8CrBnSSwMw5+dy11O7FRX5mkO7Cg==
+
+zxcvbn3@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/zxcvbn3/-/zxcvbn3-0.1.1.tgz#16d43fa83916f15fc2857935ffb1709952055ba7"
+  integrity sha512-4tf/nEdWtRam8fH3Nrx1kwjEW2TW1lZAJYr5CHv4pd+5F+jo75sTRc6espENXS/F8uv0Fwpk62yOgktIZj5NOg==
+  dependencies:
+    "@types/tape" "^4.13.0"

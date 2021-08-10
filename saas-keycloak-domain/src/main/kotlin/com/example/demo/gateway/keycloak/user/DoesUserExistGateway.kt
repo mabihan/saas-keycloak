@@ -1,9 +1,8 @@
 package com.example.demo.gateway.keycloak.user
 
-import com.example.demo.model.UserCreateDomain
-
 interface DoesUserExistGateway {
 
-    fun execute(tenantNamespace: String, userCreateDomain: UserCreateDomain): Boolean
-    fun execute(tenantNamespace: String, username: String?, email: String?): Boolean
+    fun executeForEmail(tenantUuid: String, email: String): Boolean
+    fun executeForUuid(tenantUuid: String, uuid: String): Boolean
+    fun executeForUsername(tenantUuid: String, username: String): Boolean
 }

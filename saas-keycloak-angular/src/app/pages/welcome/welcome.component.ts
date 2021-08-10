@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Observable, Observer } from "rxjs";
 import { Router } from "@angular/router";
@@ -23,6 +23,13 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleDeleteKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.navigateToRegistrationForm()
+    }
   }
 
   navigateToRegistrationForm() {

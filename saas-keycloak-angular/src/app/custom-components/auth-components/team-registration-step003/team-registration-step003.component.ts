@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
-import { Observable, Observer } from "rxjs";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { NzValidateStatusEnum } from "../../../core/model/enum/NzValidateStatusEnum";
 
 @Component({
   selector: 'app-team-registration-step003',

@@ -4,6 +4,6 @@ import com.example.demo.model.UserDomain
 
 interface GetUserGateway {
 
-    fun execute(tenantNamespace: String, id: String): UserDomain
+    fun execute(tenantUuid: String, id: String): UserDomain
 
 }

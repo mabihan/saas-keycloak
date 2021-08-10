@@ -1,6 +1,6 @@
 package com.example.demo.gateway.database.impl.tenant
 
-import com.example.demo.exception.tenant.TenantNotFoudException
+import com.example.demo.exception.tenant.TenantNotFoundException
 import com.example.demo.gateway.database.repository.TenantRepository
 import com.example.demo.gateway.database.translator.TenantDBToTenantDomainTranslator
 import com.example.demo.gateway.tenant.GetTenantByNamespaceGateway
@@ -13,7 +13,7 @@ class GetTenantByNamespaceGatewayImpl(private val tenantRepository: TenantReposi
     override fun execute(namespace: String): TenantDomain {
 
         if (!this.tenantRepository.existsByNamespace(namespace)) {
-            throw TenantNotFoudException("Tenant with namespace $namespace does not exist." )
+            throw TenantNotFoundException("Tenant with namespace $namespace does not exist." )
         }
 
         return TenantDBToTenantDomainTranslator().translate(this.tenantRepository.findByNamespace(namespace))

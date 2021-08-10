@@ -9,14 +9,14 @@ import java.util.*
 
 class UserDomainToUserResponseTranslator {
 
-    fun translate(userDomain: UserDomain): UserResponse {
-
+    fun translate(userDomain: UserDomain, tenantUuid: String): UserResponse {
 
         val instant = Instant.ofEpochMilli(userDomain.createdTimestamp)
         val createdTimestamp = instant.atZone(ZoneId.systemDefault()).toLocalDateTime()
 
         return UserResponse(
-            id = userDomain.id.orEmpty(),
+            uuid = userDomain.id.orEmpty(),
+            tenantUuid = tenantUuid,
             firstName = userDomain.firstName,
             lastName = userDomain.lastName,
             email = userDomain.email,

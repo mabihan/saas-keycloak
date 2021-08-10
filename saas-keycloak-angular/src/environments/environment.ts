@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  api_url: "http://localhost:8090/v1",
   configFile: 'assets/config/config.dev.json'
 };
 

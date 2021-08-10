@@ -65,7 +65,7 @@
                         <pattern>com.example.demo.model.*</pattern>
                     </classPatterns>
                     <outputKind>module</outputKind>
-                    <outputFile>../saas-keycloak-angular/src/app/model/api/api.d.ts</outputFile>
+                    <outputFile>../saas-keycloak-angular/src/app/core/model/api/api.d.ts</outputFile>
                 </configuration>
             </plugin>
         </plugins>

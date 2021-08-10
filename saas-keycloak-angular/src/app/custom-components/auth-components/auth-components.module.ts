@@ -15,6 +15,8 @@ import { NzTabsModule } from "ng-zorro-antd/tabs";
 import { TeamRegistrationStep004Component } from './team-registration-step004/team-registration-step004.component';
 import { NzResultModule } from "ng-zorro-antd/result";
 import { NzSpinModule } from "ng-zorro-antd/spin";
+import { NzProgressModule } from "ng-zorro-antd/progress";
+import { PasswordStrengthMeterModule } from "angular-password-strength-meter";
 
 
 
@@ -30,18 +32,20 @@ import { NzSpinModule } from "ng-zorro-antd/spin";
     exports: [
         TeamRegistrationComponent
     ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NzFormModule,
-    NzInputModule,
-    NzButtonModule,
-    NzSelectModule,
-    FormsModule,
-    NzStepsModule,
-    NzTabsModule,
-    NzResultModule,
-    NzSpinModule
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NzFormModule,
+        NzInputModule,
+        NzButtonModule,
+        NzSelectModule,
+        FormsModule,
+        NzStepsModule,
+        NzTabsModule,
+        NzResultModule,
+        NzSpinModule,
+        NzProgressModule,
+        PasswordStrengthMeterModule
+    ]
 })
 export class AuthComponentsModule { }

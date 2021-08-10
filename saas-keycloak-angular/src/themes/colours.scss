@@ -6,3 +6,11 @@ $primary-color: $primary;
   background: #fff;
   border-color: $primary;
 }
+
+.ant-btn-primary {
+  color: #fff;
+  background: $primary;
+  border-color: $primary;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+  box-shadow: 0 2px 0 rgb(0 0 0 / 5%);
+}
