@@ -1,0 +1,39 @@
+.header {
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 1vh;
+  padding-bottom: 1vh;
+}
+
+nz-card {
+  margin-bottom: 0.5em;
+  ::ng-deep {
+    .ant-card-body {
+      padding: 0.8em;
+      font-size: small;
+
+      ::ng-deep {
+        p {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.api {
+  nz-card {
+    background-color: #FFFFF8;
+  }
+}
+
+.angular {
+  nz-card {
+    background-color: #fff8f8;
+  }
+}
+
+.keycloak {
+  nz-card {
+    background-color: #f8faff;
+  }
+}

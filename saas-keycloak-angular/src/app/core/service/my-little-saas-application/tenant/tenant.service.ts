@@ -14,18 +14,33 @@ export class TenantService {
     private apiService: ApiService
   ) {}
 
-  getNamespaceValidity(namespace: string): Observable<ObjectValidationResponse> {
-    return this.apiService.get(`/tenant/validate?namespace=${namespace}`)
+  get(namespace: string): Observable<TenantResponse> {
+    return this.apiService.get(`/api/v1/tenant?namespace=${namespace}`)
+      .pipe(map((data: TenantResponse) => {
+        return data
+      }))
+
+  }
+
+  getNewNamespaceValidity(namespace: string): Observable<ObjectValidationResponse> {
+    return this.apiService.get(`/api/v1/tenant/new/validate?namespace=${namespace}`)
       .pipe(map((data: ObjectValidationResponse) => {
         return data
       }))
   }
 
-  save(newTenant: TenantRequest): Observable<string> {
-    return this.apiService.post(`/tenant/`, newTenant)
-      .pipe(map((data: string) => {
-        console.log(data)
+  getNamespaceValidity(namespace: string): Observable<ObjectValidationResponse> {
+    return this.apiService.get(`/api/v1/tenant/validate?namespace=${namespace}`)
+      .pipe(map((data: ObjectValidationResponse) => {
         return data
       }))
+  }
+
+  save(newTenant: TenantRequest): Observable<TenantResponse> {
+    return this.apiService.post(`/api/v1/tenant/`, newTenant)
+      .pipe(map((data: TenantResponse) => {
+        return data
+      }))
+
   }
 }

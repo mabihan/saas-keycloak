@@ -8,8 +8,8 @@ class UserRequestToUserCreateDomainTranslator {
 
     fun translate(userRequest: UserRequest): UserCreateDomain {
         return UserCreateDomain(
-            firstName = userRequest.firstName,
-            lastName = userRequest.lastName,
+            firstName = userRequest.firstName.orEmpty(),
+            lastName = userRequest.lastName.orEmpty(),
             username = userRequest.username,
             email = userRequest.email,
             password = userRequest.password,

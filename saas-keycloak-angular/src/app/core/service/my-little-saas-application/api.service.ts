@@ -1,44 +1,51 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable ,  throwError } from 'rxjs';
 
 import { catchError } from 'rxjs/operators';
-import { environment } from "../../../../environments/environment";
+import { environment } from "@/environments/environment";
+import { ApiErrorService } from "@/app/core/service/my-little-saas-application/error/api-error.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class ApiService {
 
   constructor(
     private http: HttpClient,
+    private apiErrorService: ApiErrorService,
+    private router: Router
   ) {}
 
 
-  private static formatErrors(error: any) {
+  private formatErrors(error: HttpErrorResponse) {
+    this.apiErrorService.currentError = error
+    this.router.navigate(["/error/"],{})
+      .then()
     return  throwError(error.error);
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
-    return this.http.get(`${environment.api_url}${path}`, { params })
-      .pipe(catchError(ApiService.formatErrors));
+    return this.http.get(`${path}`, { params })
+      .pipe(catchError( err => this.formatErrors(err)));
   }
 
   put(path: string, body: Object = {}): Observable<any> {
     return this.http.put(
-      `${environment.api_url}${path}`,
+      `${path}`,
       JSON.stringify(body)
-    ).pipe(catchError(ApiService.formatErrors));
+    ).pipe(catchError( err => this.formatErrors(err)));
   }
 
   post(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
-      `${environment.api_url}${path}`,
+      `${path}`,
       JSON.stringify(body)
-    ).pipe(catchError(ApiService.formatErrors));
+    ).pipe(catchError( err => this.formatErrors(err)));
   }
 
   delete(path: string): Observable<any> {
     return this.http.delete(
-      `${environment.api_url}${path}`
-    ).pipe(catchError(ApiService.formatErrors));
+      `${path}`
+    ).pipe(catchError( err => this.formatErrors(err)));
   }
 }

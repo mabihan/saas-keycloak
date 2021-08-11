@@ -2,6 +2,9 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Observable, Observer } from "rxjs";
 import { Router } from "@angular/router";
+import { TenantResponse } from "@/app/core/model/api/api";
+import { UserService } from "@/app/core/service/my-little-saas-application/user/user.service";
+import { TenantService } from "@/app/core/service/my-little-saas-application/tenant/tenant.service";
 
 @Component({
   selector: 'app-welcome',
@@ -21,9 +24,7 @@ export class WelcomeComponent implements OnInit {
     this.randomImageIndex = Math.floor(Math.random() * 4) + 1;
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   @HostListener('document:keyup', ['$event'])
   handleDeleteKeyboardEvent(event: KeyboardEvent) {

@@ -11,4 +11,5 @@ data class KeycloakUserCreate(
     val firstName: String,
     val lastName: String,
     val email: String,
+    val credentials: List<KeycloakUserCredentials>
 )

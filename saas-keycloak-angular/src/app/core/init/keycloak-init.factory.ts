@@ -1,7 +1,7 @@
 import { KeycloakService } from "keycloak-angular";
 import { switchMap } from "rxjs/operators";
 import { fromPromise } from 'rxjs/internal-compatibility';
-import { ConfigInitService } from "./config-init.service";
+import { ConfigInitService } from "@/app/core/init/config-init.service";
 
 export function initializeKeycloak(
   keycloak: KeycloakService,

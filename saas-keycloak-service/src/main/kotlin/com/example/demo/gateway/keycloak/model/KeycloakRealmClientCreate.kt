@@ -1,7 +1,6 @@
 package com.example.demo.gateway.keycloak.model
 
 data class KeycloakRealmClientCreate(
-    val id: String,
     val name: String,
     val adminUrl: String,
     val rootUrl: String,

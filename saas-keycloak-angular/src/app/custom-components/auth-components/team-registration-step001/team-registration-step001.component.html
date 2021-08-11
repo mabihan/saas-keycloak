@@ -25,7 +25,7 @@
   <nz-form-item>
     <nz-form-control [nzOffset]="6" [nzSpan]="12" nzHasFeedback [nzErrorTip]="timeZoneErrorTpl">
       <nz-select formControlName="teamTimeZone" nzShowSearch nzAllowClear nzPlaceHolder="Select a timezone">
-        <nz-option *ngFor="let tz of this.timeZoneList" nzLabel="{{tz}}" nzValue="{{tz}}"></nz-option>
+        <nz-option *ngFor="let tz of this.timeZoneList" nzLabel="{{tz.name}}" nzValue="{{tz.id}}"></nz-option>
       </nz-select>
       <ng-template #timeZoneErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">Please input your team's timezone!</ng-container>

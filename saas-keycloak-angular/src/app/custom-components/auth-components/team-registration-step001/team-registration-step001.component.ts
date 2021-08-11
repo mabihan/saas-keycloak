@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { NzValidateStatusEnum } from "@/app/core/model/enum/NzValidateStatusEnum";
 import { TenantService } from "@/app/core/service/my-little-saas-application/tenant/tenant.service";
 import { ObjectValidationResponse } from "@/app/core/model/api/api";
+import { Timezone } from "@/app/core/service/my-little-saas-application/timezones.service";
 
 @Component({
   selector: 'app-team-registration-step001',
@@ -13,7 +14,9 @@ import { ObjectValidationResponse } from "@/app/core/model/api/api";
 export class TeamRegistrationStep001Component implements OnInit {
 
   @Input() validateForm: FormGroup
-  @Input() timeZoneList: string[]
+  @Input() timeZoneList: Timezone[]
+
+  FAKE_TIMEOUT_MS = 700
 
   teamNameValidationStatus: NzValidateStatusEnum | string
   teamNameValidationError: boolean
@@ -50,10 +53,18 @@ export class TeamRegistrationStep001Component implements OnInit {
   validateTeamName(newTeamName: string) {
     this.teamNameValidationStatus = NzValidateStatusEnum.VALIDATING
     setTimeout(() => {
-      if (newTeamName.length > 0) {
-        this.tenantService.getNamespaceValidity(newTeamName)
+      if (newTeamName.length > 30) {
+        this.teamNameValidationStatus = NzValidateStatusEnum.ERROR
+        this.teamNameValidationError = true
+        this.teamNameValidationErrorMessage = "Team's name cannot exceed 30 characters."
+        this.teamNameValidationSuccessMessage = ""
+      } else if (newTeamName.length <= 30 && newTeamName.length > 0) {
+        this.tenantService.getNewNamespaceValidity(newTeamName)
           .subscribe(
             (validity: ObjectValidationResponse) => {
+
+              console.log(validity)
+
               if(validity.valid) {
                 this.teamNameValidationStatus = NzValidateStatusEnum.SUCCESS
                 this.teamNameValidationError = false
@@ -74,6 +85,6 @@ export class TeamRegistrationStep001Component implements OnInit {
         this.teamNameValidationSuccessMessage = ""
       }
       this.teamNameValidationEvent.emit(this.teamNameValidationStatus)
-    }, 1000);
+    }, this.FAKE_TIMEOUT_MS);
   }
 }

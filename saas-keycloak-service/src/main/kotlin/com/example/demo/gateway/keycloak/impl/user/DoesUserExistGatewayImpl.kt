@@ -24,7 +24,7 @@ class DoesUserExistGatewayImpl(private val userRepository: UserRepository,
                 val tenantDb = this.tenantRepository.findByUuid(validUuid)
 
                 val keycloakUserByEmail = this.userRepository.findByEmail(
-                    tenantDb.namespace,
+                    tenantDb.keycloakRealm,
                     email,
                     Pageable.ofSize(1)
                 )
@@ -50,7 +50,7 @@ class DoesUserExistGatewayImpl(private val userRepository: UserRepository,
 
             try {
                 this.userRepository.findById(
-                    tenantDb.namespace,
+                    tenantDb.keycloakRealm,
                     uuid
                 )
             } catch (ex: EmptyResultDataAccessException) {
@@ -71,7 +71,7 @@ class DoesUserExistGatewayImpl(private val userRepository: UserRepository,
             val tenantDb = this.tenantRepository.findByNamespace(tenantUuid)
 
             val keycloakUserByEmail = this.userRepository.findByUsername(
-                tenantDb.namespace,
+                tenantDb.keycloakRealm,
                 username,
                 Pageable.ofSize(1)
             )

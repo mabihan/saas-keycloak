@@ -1,6 +1,3 @@
-<button nz-button nzType="default" (click)="debug()">
-  Debug
-</button>
 <nz-form-item class="my-5">
   <nz-form-control *ngIf="currentStep<3" [nzOffset]="6" [nzSpan]="12">
     <label class="text-muted">Step {{ currentStep + 1 }} of 3</label>
@@ -9,7 +6,6 @@
     <h1 *ngIf="currentStep == 0">First, what's the name of your company or team ?</h1>
     <h1 *ngIf="currentStep == 1">Then, create your personal account</h1>
     <h1 *ngIf="currentStep == 2">What would you like to use MyLittleSaasApplication first ?</h1>
-    <h1 *ngIf="currentStep == 3">We're getting  things ready, hold on a sec</h1>
   </nz-form-control>
 </nz-form-item>
 
@@ -18,13 +14,13 @@
     <app-team-registration-step001 (teamNameValidationEvent)="onTeamValidationEvent($event)" [validateForm]="this.validateForm" [timeZoneList]="this.timeZoneList"></app-team-registration-step001>
   </nz-tab>
   <nz-tab>
-    <app-team-registration-step002 (passwordStrengthChange)="onPasswordStrenghtEvent($event)" [validateForm]="this.validateForm" ></app-team-registration-step002>
+    <app-team-registration-step002 (passwordStrengthChange)="onPasswordStrengthEvent($event)" [validateForm]="this.validateForm" ></app-team-registration-step002>
   </nz-tab>
   <nz-tab>
     <app-team-registration-step003 [validateForm]="this.validateForm"></app-team-registration-step003>
   </nz-tab>
   <nz-tab>
-    <app-team-registration-step004></app-team-registration-step004>
+    <app-team-registration-step004 [createdUser]="this.createdUser" [loading]="this.loading"></app-team-registration-step004>
   </nz-tab>
 </nz-tabset>
 

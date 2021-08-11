@@ -6,15 +6,11 @@ import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
 data class UserRequest(
-        @ApiModelProperty(required = true)
-        @field:NotBlank(message = "The first name must be informed")
-        @field:Size(min = 2, max = 255, message = "The min first name name size is 2 and the max is 255")
-        val firstName: String,
+        @ApiModelProperty(required = false)
+        val firstName: String?,
 
-        @ApiModelProperty(required = true)
-        @field:NotBlank(message = "The last name must be informed")
-        @field:Size(min = 2, max = 255, message = "The min last name name size is 2 and the max is 255")
-        val lastName: String,
+        @ApiModelProperty(required = false)
+        val lastName: String?,
 
         // TODO : Add custom validator to check email uniqueness
         @ApiModelProperty(required = true)

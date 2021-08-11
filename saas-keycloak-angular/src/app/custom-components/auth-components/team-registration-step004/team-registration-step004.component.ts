@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { UserResponse } from "@/app/core/model/api/api";
 
 @Component({
   selector: 'app-team-registration-step004',
@@ -7,7 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeamRegistrationStep004Component implements OnInit {
 
-  constructor() { }
+  @Input() loading: boolean
+  @Input() createdUser: UserResponse
+
+  constructor() {
+    this.loading = true
+    this.createdUser = {
+      uuid: "",
+      tenantUuid: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      username: "",
+      createdTimestamp: new Date(),
+      enabled: false,
+      totp: false,
+      emailVerified: false
+    }
+  }
 
   ngOnInit(): void {
   }

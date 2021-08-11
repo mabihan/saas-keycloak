@@ -1,0 +1,13 @@
+<div class="container error-generic d-flex justify-content-center align-items-center">
+  <div *ngIf="this.error.error">
+    <h1 class="font-weight-bold mb-3">{{ this.error.error.message }}</h1>
+    <div class="text-gray-6 error-details" *ngIf="this.error.error.errors">{{ this.error.error.errors.join(", ") }}</div>
+    <div class="font-weight-bold mb-1 error-code">{{ this.error.status}} —</div>
+    <a routerLink="/" class="btn btn-outline-primary width-100 mt-5">
+      Go Back
+    </a>
+    <a routerLink="/" class="btn btn-outline-secondary ml-1 width-100 mt-5">
+    Contact support
+  </a>
+  </div>
+</div>

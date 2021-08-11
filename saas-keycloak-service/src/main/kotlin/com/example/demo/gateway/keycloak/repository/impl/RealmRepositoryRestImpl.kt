@@ -43,8 +43,16 @@ class RealmRepositoryRestImpl(private val keycloakAuthenticatedWebClient: WebCli
                 fromDisplayName = applicationProperties.keycloak.smtp.fromDisplayName,
                 from = applicationProperties.keycloak.smtp.from,
                 ssl = applicationProperties.keycloak.smtp.ssl,
-                user = applicationProperties.keycloak.smtp.user)
-            )
+                user = applicationProperties.keycloak.smtp.user),
+            enabled = true,
+            sslRequired = "external",
+            registrationAllowed = false,
+            loginWithEmailAllowed = true,
+            duplicateEmailsAllowed = false,
+            resetPasswordAllowed = true,
+            editUsernameAllowed = true,
+            bruteForceProtected = true
+        )
 
         return keycloakAuthenticatedWebClient
             .post()

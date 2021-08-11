@@ -36,9 +36,9 @@ class TenantController(
             .thenApplyAsync { TenantDomainToTenantResponseTranslator().translate(it) }
     }
 
-    override fun getTenant(uuid: String): CompletionStage<TenantResponse> {
+    override fun getTenant(namespace: String): CompletionStage<TenantResponse> {
         return CompletableFuture
-            .supplyAsync { getTenantByNamespaceUseCase.execute(uuid) }
+            .supplyAsync { getTenantByNamespaceUseCase.execute(namespace) }
             .thenApplyAsync { TenantDomainToTenantResponseTranslator().translate(it) }
     }
 
@@ -57,9 +57,15 @@ class TenantController(
         return MessageResponse(TenantHttpResponse.TENANT_DELETED.httpStatus, TenantHttpResponse.TENANT_DELETED.httpMessage)
     }
 
+    override fun getNewNamespaceValidity(namespace: String): CompletionStage<ObjectValidationResponse> {
+        return CompletableFuture
+            .supplyAsync { validateTenantUseCase.executeForNew(namespace) }
+            .thenApplyAsync { ObjectValidationDomainToObjectValidationResponseTranslator().translate(it) }
+    }
+
     override fun getNamespaceValidity(namespace: String): CompletionStage<ObjectValidationResponse> {
         return CompletableFuture
-            .supplyAsync { validateTenantUseCase.execute(namespace) }
+            .supplyAsync { validateTenantUseCase.executeForExisting(namespace) }
             .thenApplyAsync { ObjectValidationDomainToObjectValidationResponseTranslator().translate(it) }
     }
 }

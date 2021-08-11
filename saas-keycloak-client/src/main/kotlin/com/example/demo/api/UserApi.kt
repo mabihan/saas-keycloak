@@ -11,9 +11,8 @@ import java.util.concurrent.CompletionStage
 import javax.validation.Valid
 import javax.validation.constraints.Email
 
-@RequestMapping("/v1/tenant/")
+@RequestMapping("/api/v1/tenant/")
 @Api(tags = ["User"])
-@CrossOrigin(origins = ["http://localhost:4200"])
 interface UserApi {
 
     @ApiOperation(value = "Create a user", notes = "Create a user.")

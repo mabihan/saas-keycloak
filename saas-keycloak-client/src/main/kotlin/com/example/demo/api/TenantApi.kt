@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.*
 import java.util.concurrent.CompletionStage
 import javax.validation.Valid
 
-@RequestMapping("/v1/")
+@RequestMapping("/api/v1/")
 @Api(tags = ["Tenant"])
-@CrossOrigin(origins = ["http://localhost:4200"])
 interface TenantApi {
 
     @ApiOperation(value = "Create a tenant", notes = "Create a tenant")
@@ -25,12 +24,16 @@ interface TenantApi {
     fun createTenant(@Valid @RequestBody tenantRequest: TenantRequest): CompletionStage<TenantResponse>
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/tenant/new/validate")
+    fun getNewNamespaceValidity(namespace: String): CompletionStage<ObjectValidationResponse>
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tenant/validate")
     fun getNamespaceValidity(namespace: String): CompletionStage<ObjectValidationResponse>
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tenant")
-    fun getTenant(uuid: String): CompletionStage<TenantResponse>
+    fun getTenant(namespace: String): CompletionStage<TenantResponse>
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tenants")

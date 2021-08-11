@@ -20,6 +20,9 @@ import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { WebappModule } from './pages/webapp/webapp.module';
 import { CustomComponentsModule } from './custom-components/custom-components.module';
 import { CoreModule } from './core/core.module';
+import { ErrorModule } from './pages/error/error.module';
+import { BoardingModule } from './pages/boarding/boarding.module';
+import { RoadmapModule } from "@/app/pages/roadmap/roadmap.module";
 
 registerLocaleData(en);
 
@@ -41,6 +44,9 @@ registerLocaleData(en);
     WebappModule,
     CustomComponentsModule,
     CoreModule,
+    ErrorModule,
+    BoardingModule,
+    RoadmapModule,
   ],
   providers: [
     ConfigInitService,

@@ -10,6 +10,7 @@
     <nz-form-control [nzOffset]="6" [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
       <input nz-input formControlName="userName" placeholder="username" />
       <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('whitespace')">Your username must not contain spaces.</ng-container>
         <ng-container *ngIf="control.hasError('required')">Please input your username.</ng-container>
         <ng-container *ngIf="control.hasError('message')">{{control.errors.message}}</ng-container>
       </ng-template>
@@ -43,6 +44,7 @@
       <input (ngModelChange)='onPasswordChange($event)' nz-input type="password" formControlName="password" />
       <ng-template #passwordWarningTpl let-control>
         <ng-container *ngIf="control.hasError('required')">Please input your password.</ng-container>
+        <ng-container *ngIf="control.hasError('message')">{{control.errors.message}}</ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>

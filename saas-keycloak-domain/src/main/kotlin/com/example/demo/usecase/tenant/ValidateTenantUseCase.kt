@@ -12,7 +12,16 @@ class ValidateTenantUseCase(private val doesTenantNamespaceExistGateway: DoesTen
 
     private val minNamespaceLength = 3
 
-    fun execute(namespace: String): ObjectValidationDomain {
+    /**
+     * Validate the namespace of the tenant we wish to create, against multiples rules : uniqueness, length, allowed
+     * characters.
+     *
+     * @param namespace: Namespace of tenant we wish to create
+     *
+     * @return An ObjectValidationDomain object containing the validity check result and specific message for success or
+     * failure against specific steps of the validation.
+     */
+    fun executeForNew(namespace: String): ObjectValidationDomain {
 
         val valid: Boolean
         val message: String
@@ -46,5 +55,40 @@ class ValidateTenantUseCase(private val doesTenantNamespaceExistGateway: DoesTen
             error = error
         )
 
+    }
+
+    /**
+     * Validate the namespace of the tenant. Valid if the tenant name exist.
+     *
+     * @param namespace: Namespace of tenant we wish to validate
+     *
+     * @return An ObjectValidationDomain object containing the validity check result and specific message for success or
+     * failure against specific steps of the validation.
+     */
+    fun executeForExisting(namespace: String): ObjectValidationDomain {
+
+        // TODO : add a check for validating that the tenant is enabled.
+
+        val valid: Boolean
+        val message: String
+        val error: String
+
+        val doesNamespaceAlreadyExist = doesTenantNamespaceExistGateway.execute(namespace)
+
+        if (doesNamespaceAlreadyExist) {
+            valid = true
+            message = "Team name is valid"
+            error = ""
+        } else  {
+            valid = false
+            message = ""
+            error = "Team $namespace does not exist."
+        }
+
+        return ObjectValidationDomain(
+            valid = valid,
+            message = message,
+            error = error
+        )
     }
 }

@@ -1,52 +1,63 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Observable, Observer } from "rxjs";
 import { NzValidateStatusEnum } from "@/app/core/model/enum/NzValidateStatusEnum";
 import { KeycloakUserService } from "@/app/core/service/keycloak/user/keycloak-user.service";
 import { UserService } from "@/app/core/service/my-little-saas-application/user/user.service";
-
-// @ts-ignore
-import timezones from 'google-timezones-json';
-import { ObjectValidationResponse } from "@/app/core/model/api/api";
+import { Timezone, TimezonesService } from "@/app/core/service/my-little-saas-application/timezones.service";
+import { ObjectValidationResponse, TenantResponse, UserResponse } from "@/app/core/model/api/api";
 
 @Component({
   selector: 'app-team-registration-form',
   templateUrl: './team-registration-form.component.html',
   styleUrls: ['./team-registration-form.component.scss']
 })
-export class TeamRegistrationFormComponent implements OnInit {
+export class TeamRegistrationFormComponent {
 
+  FAKE_TIMEOUT_MS = 700
   validateForm: FormGroup
 
   currentStep = 0;
   teamNameValidationStatus: NzValidateStatusEnum
-  timeZoneList: string[];
+  timeZoneList: Timezone[];
   passwordStrength: number
+
+  createdUser: UserResponse
+  loading = false
 
   constructor(
     private fb: FormBuilder,
     private keycloakUserService: KeycloakUserService,
-    private userService: UserService
+    private userService: UserService,
+    private timezonesService: TimezonesService
   ) {
-
+    this.createdUser = {
+      uuid: "",
+      tenantUuid: "",
+      firstName: "John Doe",
+      lastName: "Fitzgerald",
+      email: "john.doe@example.com",
+      username: "john-doe",
+      createdTimestamp: new Date(),
+      enabled: false,
+      totp: false,
+      emailVerified: false
+    }
     this.passwordStrength = 0
     this.teamNameValidationStatus = NzValidateStatusEnum.VALIDATING
 
     this.validateForm = this.fb.group({
-      userName: ['', [Validators.required], [this.userNameAsyncValidator]],
-      email: ['', [Validators.email, Validators.required], [this.emailNameAsyncValidator]],
+      userName: ['', [Validators.required, Validators.maxLength(30)], [this.userNameAsyncValidator]],
+      email: ['', [Validators.email, Validators.required], []],
       password: ['', [Validators.required], [this.passwordComplexityAsyncValidator]],
-      teamName: ['', [Validators.required]],
-      teamTimeZone: ['', [Validators.required], [this.timeZoneAsyncValidator]],
+      teamName: ['', [Validators.required, Validators.maxLength(30)]],
+      teamTimeZone: ['', [Validators.required], []],
     });
 
-    this.timeZoneList = Object.keys(timezones)
-      .map(value => value.replace("_", "-"))
+    this.timeZoneList = this.timezonesService.timeZoneList
   }
 
-  ngOnInit() {
-  }
-
+  // Navigation functions
   pre(): void {
     this.currentStep -= 1;
   }
@@ -61,30 +72,37 @@ export class TeamRegistrationFormComponent implements OnInit {
   }
 
   @HostListener('document:keyup', ['$event'])
-  handleDeleteKeyboardEvent(event: KeyboardEvent) {
+  nextFromKeyboard(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       this.next()
-    }
-    if (event.key === 'Backspace') {
-      this.pre()
     }
   }
 
   submitForm(): void {
 
-    for (const key in this.validateForm.controls) {
-      if (this.validateForm.controls.hasOwnProperty(key)) {
-        this.validateForm.controls[key].markAsDirty();
-        this.validateForm.controls[key].updateValueAndValidity();
-      }
-    }
+    this.loading = true
 
-    this.keycloakUserService.registerUser()
-      .then((value => {
-        console.log(value)
-      }))
+    this.userService.createTenantAndUser(
+      this.validateForm.get('teamName')?.value,
+      this.timezonesService.getTimeZoneById(this.validateForm.get('teamTimeZone')?.value).offset,
+      this.validateForm.get('userName')?.value,
+      this.validateForm.get('email')?.value,
+      this.validateForm.get('password')?.value,
+    )
+      .subscribe( (createdUser: UserResponse) => {
+        this.createdUser = createdUser
+        this.loading = false
+
+        for (const key in this.validateForm.controls) {
+          if (this.validateForm.controls.hasOwnProperty(key)) {
+            this.validateForm.controls[key].markAsDirty();
+            this.validateForm.controls[key].updateValueAndValidity();
+          }
+        }
+      })
   }
 
+  // Validators functions
   passwordComplexityAsyncValidator = (control: FormControl) =>
     new Observable((observer: Observer<ValidationErrors | null>) => {
       setTimeout(() => {
@@ -92,18 +110,28 @@ export class TeamRegistrationFormComponent implements OnInit {
         if (this.passwordStrength > 2) {
           observer.next({});
         } else {
-          observer.next({error: true});
+          observer.next({error: true, message: "Please choose a more secured password."});
         }
 
         observer.complete();
 
-      }, 1000);
+      }, this.FAKE_TIMEOUT_MS);
     });
 
   userNameAsyncValidator = (control: FormControl) =>
     new Observable((observer: Observer<ValidationErrors | null>) => {
       setTimeout(() => {
 
+        const isValid = control.value.replace(/\s/g, '') === control.value;
+
+        if (isValid) {
+          observer.next({})
+        } else {
+          observer.next({ 'whitespace': true })
+        }
+
+        observer.complete();
+        /*
         this.userService.getUsernameValidity(this.validateForm.get('teamName')?.value, control.value)
           .subscribe(
             (validity: ObjectValidationResponse) => {
@@ -117,8 +145,8 @@ export class TeamRegistrationFormComponent implements OnInit {
               }
               observer.complete();
             }
-          )
-      }, 1000);
+          )*/
+      }, this.FAKE_TIMEOUT_MS);
     });
 
   emailNameAsyncValidator = (control: FormControl) =>
@@ -139,48 +167,31 @@ export class TeamRegistrationFormComponent implements OnInit {
               observer.complete();
             }
           )
-      }, 1000);
+      }, this.FAKE_TIMEOUT_MS);
     });
-
-  debug():void {
-    console.log("[" + this.validateForm.get('userName')?.status + "]" + this.validateForm.get('userName')?.value)
-    console.log("[" + this.validateForm.get('email')?.status + "]" + this.validateForm.get('email')?.value)
-    console.log("[" + this.validateForm.get('password')?.status + "]" + this.validateForm.get('password')?.value)
-    console.log("[" + this.validateForm.get('teamName')?.status + "]" + this.validateForm.get('teamName')?.value)
-    console.log("[" + this.validateForm.get('teamTimeZone')?.status + "]" + this.validateForm.get('teamTimeZone')?.value)
-  }
-
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { error: true, required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
 
   timeZoneAsyncValidator = (control: FormControl) =>
     new Observable((observer: Observer<ValidationErrors | null>) => {
       setTimeout(() => {
-        if (!this.timeZoneList.includes(control.value)) {
-          // you have to return `{error: true}` to mark it as an error event
+        if (this.timezonesService.isTimeZoneNameValid(control.value)) {
           observer.next({ error: true, invalid: true, message: "Please input a valid timezone!" });
         } else {
           observer.next({});
         }
         observer.complete();
-      }, 1000);
+      }, this.FAKE_TIMEOUT_MS);
     });
 
-
+  // Events handling
   onTeamValidationEvent($event: NzValidateStatusEnum) {
     this.teamNameValidationStatus = $event
   }
 
-  onPasswordStrenghtEvent($event: any) {
+  onPasswordStrengthEvent($event: any) {
     this.passwordStrength = $event
   }
 
+  // Getters
   get getNzValidateStatusEnum(): typeof NzValidateStatusEnum {
     return NzValidateStatusEnum;
   }

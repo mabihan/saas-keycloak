@@ -1,6 +1,7 @@
 package com.example.demo.gateway.keycloak.translator
 
 import com.example.demo.gateway.keycloak.model.KeycloakUserCreate
+import com.example.demo.gateway.keycloak.model.KeycloakUserCredentials
 import com.example.demo.model.UserCreateDomain
 
 class UserDomainToKeycloakUserCreateTranslator {
@@ -14,7 +15,12 @@ class UserDomainToKeycloakUserCreateTranslator {
             username = userCreateDomain.username,
             enabled = true,
             totp = false,
-            emailVerified = false
+            emailVerified = false,
+            credentials = listOf(KeycloakUserCredentials (
+                type = "password",
+                temporary = false,
+                value = userCreateDomain.password
+                    ))
         )
     }
 }

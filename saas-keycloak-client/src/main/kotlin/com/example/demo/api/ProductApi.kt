@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.*
 import java.security.Principal
 import javax.validation.Valid
 
-@RequestMapping("/v1")
+@RequestMapping("/api/v1")
 @Api(tags = ["Product"])
-@CrossOrigin(origins = ["http://localhost:4200"])
 interface ProductApi {
 
     @ApiOperation(value = "Create a product", notes = "Create a product")
