@@ -1,11 +1,11 @@
 package com.example.demo.model
 
-import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 data class TenantDomain(
-        val id: Long? = null,
+        val uuid: String,
         val namespace: String,
-        val contact: String,
-        val createdDate: LocalDateTime,
-        val updatedDate: LocalDateTime? = null
+        var schemaName: String,
+        var keycloakRealm: String,
+        val timeZone: ZoneOffset,
 )

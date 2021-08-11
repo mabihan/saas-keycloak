@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 import java.security.Principal
 import javax.validation.Valid
 
-@RequestMapping("/v1")
+@RequestMapping("/api/v1")
 @Api(tags = ["Product"])
 interface ProductApi {
 

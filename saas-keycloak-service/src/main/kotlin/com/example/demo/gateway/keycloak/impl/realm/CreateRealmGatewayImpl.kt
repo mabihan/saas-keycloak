@@ -3,7 +3,7 @@ package com.example.demo.gateway.keycloak.impl.realm
 import com.example.demo.exception.InternalErrorException
 import com.example.demo.gateway.keycloak.realm.CreateRealmGateway
 import com.example.demo.gateway.keycloak.repository.RealmRepository
-import com.example.demo.model.TenantDomain
+import com.example.demo.model.TenantCreateDomain
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.inject.Named
@@ -13,12 +13,12 @@ class CreateRealmGatewayImpl(private val realmRepository: RealmRepository): Crea
 
     private val log: Logger = LoggerFactory.getLogger(CreateRealmGatewayImpl::class.java)
 
-    override fun execute(tenantDomain: TenantDomain) {
+    override fun execute(tenantCreateDomain: TenantCreateDomain) {
         try {
-            this.realmRepository.save(tenantDomain.namespace)
+            this.realmRepository.save(tenantCreateDomain)
         } catch (ex: Exception) {
-            log.error("Internal error while creating realm ${tenantDomain.namespace}", ex)
-            throw InternalErrorException("Internal error while creating realm ${tenantDomain.namespace}:" + ex.message)
+            log.error("Internal error while creating realm ${tenantCreateDomain.namespace}", ex)
+            throw InternalErrorException("Internal error while creating realm ${tenantCreateDomain.namespace}:" + ex.message)
         }
     }
 }

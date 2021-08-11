@@ -10,7 +10,6 @@ class KeycloakRealmClientCreateGenerator {
     fun generate(realm: String, applicationProperties: ApplicationProperties): KeycloakRealmClientCreate {
 
         return KeycloakRealmClientCreate(
-            id = "${applicationProperties.keycloak.client.namePrefix}-${realm}",
             name = "${applicationProperties.keycloak.client.namePrefix}-${realm}",
             adminUrl = applicationProperties.keycloak.client.adminUrl.toString(),
             rootUrl = applicationProperties.keycloak.client.rootUrl.toString(),
@@ -35,7 +34,7 @@ class KeycloakRealmClientCreateGenerator {
             nodeReRegistrationTimeout = -1,
             defaultClientScopes = listOf("web-origins","profile","roles","email"),
             optionalClientScopes = listOf("address","phone","offline_access","microprofile-jwt"),
-            access = KeycloakRealmClientAccessCreateGenerator().generate(applicationProperties)
+            access = KeycloakRealmClientAccessCreateGenerator().generate()
         )
 
     }

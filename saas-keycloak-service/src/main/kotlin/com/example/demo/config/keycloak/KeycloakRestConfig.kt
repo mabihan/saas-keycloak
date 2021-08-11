@@ -51,27 +51,33 @@ class KeycloakRestConfig {
     fun getValidAuthorization(): KeycloakAuthorization {
 
         if (this.isAuthorizationExpired()) {
-            log.debug("Client authorization expired")
 
-            val formData: MultiValueMap<String, String> = LinkedMultiValueMap()
-            formData.add("grant_type", "refresh_token")
-            formData.add("client_id", this.properties.keycloak.clientId)
-            formData.add("refresh_token", this.authorization.refresh_token)
+            if (this.isRefreshTokenExpired()) {
+                log.warn("Client authorization refresh token expired")
+                this.authorization = this.authorize(this.properties).block()!!
+            } else {
+                log.debug("Client authorization expired")
 
-            this.authorization = WebClient.create(this.properties.keycloak.authServerUrl)
-                .post()
-                .uri("/realms/${this.properties.keycloak.realm}/protocol/openid-connect/token")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .body(BodyInserters.fromFormData(formData))
-                .exchangeToMono { response: ClientResponse ->
-                    if (response.statusCode() == HttpStatus.OK) {
-                        log.info("Successfully refresh authorization token against ${this.properties.keycloak.authServerUrl}.")
-                        return@exchangeToMono response.bodyToMono(KeycloakAuthorization::class.java)
-                    } else {
-                        log.error(response.toString())
-                        throw KeycloakRestCommunicationException("Error while authorizing client : Got HTTP ${response.statusCode()} status code." )
-                    } }
-                .block()!!
+                val formData: MultiValueMap<String, String> = LinkedMultiValueMap()
+                formData.add("grant_type", "refresh_token")
+                formData.add("client_id", this.properties.keycloak.clientId)
+                formData.add("refresh_token", this.authorization.refresh_token)
+
+                this.authorization = WebClient.create(this.properties.keycloak.authServerUrl)
+                    .post()
+                    .uri("/realms/${this.properties.keycloak.realm}/protocol/openid-connect/token")
+                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                    .body(BodyInserters.fromFormData(formData))
+                    .exchangeToMono { response: ClientResponse ->
+                        if (response.statusCode() == HttpStatus.OK) {
+                            log.info("Successfully refresh authorization token against ${this.properties.keycloak.authServerUrl}.")
+                            return@exchangeToMono response.bodyToMono(KeycloakAuthorization::class.java)
+                        } else {
+                            log.error(response.toString())
+                            throw KeycloakRestCommunicationException("Error while authorizing client : Got HTTP ${response.statusCode()} status code." )
+                        } }
+                    .block()!!
+            }
         }
 
         return this.authorization
@@ -132,15 +138,25 @@ class KeycloakRestConfig {
      * This method check whether the authorization token is expired.
      */
     private fun isAuthorizationExpired(): Boolean {
+        log.debug("Check authorization token expiration.")
+        return this.isTokenExpired(this.authorization.access_token)
+    }
 
-        val signedToken = this.authorization.access_token
+
+    private fun isRefreshTokenExpired(): Boolean {
+        log.debug("Check refresh token expiration.")
+        return this.isTokenExpired(this.authorization.refresh_token)
+    }
+
+    private fun isTokenExpired(signedToken: String): Boolean {
+
         val tokenOnly = signedToken.substring(0, signedToken.lastIndexOf('.') + 1)
 
         return try {
             val expiration = (Jwts.parser().parse(tokenOnly).body as Claims).expiration
             val remainingTime = (expiration.time -Date().time)/1000
 
-            log.debug("Client authorization will expire in $remainingTime seconds.")
+            log.debug("Token will expire in $remainingTime seconds.")
 
             false
 

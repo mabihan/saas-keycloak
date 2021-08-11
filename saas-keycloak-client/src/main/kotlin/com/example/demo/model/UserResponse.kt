@@ -5,7 +5,10 @@ import java.time.LocalDateTime
 
 data class UserResponse(
         @ApiModelProperty(required = true)
-        val id: String,
+        val uuid: String,
+
+        @ApiModelProperty(required = true)
+        val tenantUuid: String,
 
         @ApiModelProperty(required = true)
         val firstName: String,

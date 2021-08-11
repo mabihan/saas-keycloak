@@ -10,8 +10,6 @@ import javax.inject.Named
 @Named
 class GetAllTenantsUseCase(private val getAllTenantsGateway: GetAllTenantsGateway) {
 
-    private val log: Logger = LoggerFactory.getLogger(GetAllTenantsUseCase::class.java)
-
     fun execute(pageable: Pageable): List<TenantDomain> {
         return getAllTenantsGateway.execute(pageable)
     }

@@ -1,0 +1,18 @@
+<form nz-form [formGroup]="validateForm">
+
+  <!-- User name -->
+  <nz-form-item class="mb-0">
+    <nz-form-control [nzOffset]="6">
+      <h6>Team's name</h6>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="6" [nzSpan]="12" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="userErrorTpl">
+      <input nz-input formControlName="teamName" placeholder="Team name" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Please input your team's name.</ng-container>
+        <ng-container *ngIf="control.hasError('message')">{{control.errors.message}}</ng-container></ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+

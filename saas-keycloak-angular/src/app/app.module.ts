@@ -14,11 +14,15 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { AuthModule } from './pages/auth/auth.module';
 import { LayoutModule } from './layout/layout.module';
-import { ConfigInitService } from "./init/config-init.service";
-import { initializeKeycloak } from "./init/keycloak-init.factory";
+import { ConfigInitService } from "./core/init/config-init.service";
+import { initializeKeycloak } from "./core/init/keycloak-init.factory";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { WebappModule } from './pages/webapp/webapp.module';
 import { CustomComponentsModule } from './custom-components/custom-components.module';
+import { CoreModule } from './core/core.module';
+import { ErrorModule } from './pages/error/error.module';
+import { BoardingModule } from './pages/boarding/boarding.module';
+import { RoadmapModule } from "@/app/pages/roadmap/roadmap.module";
 
 registerLocaleData(en);
 
@@ -39,6 +43,10 @@ registerLocaleData(en);
     KeycloakAngularModule,
     WebappModule,
     CustomComponentsModule,
+    CoreModule,
+    ErrorModule,
+    BoardingModule,
+    RoadmapModule,
   ],
   providers: [
     ConfigInitService,

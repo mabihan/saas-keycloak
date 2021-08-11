@@ -7,6 +7,7 @@ enum class TenantHttpResponse(val httpStatus: Int, val httpMessage: String) {
     TENANT_UPDATED(202, "updated"),
     TENANT_ALREADY_EXIST(208, "already exist"),
     TENANT_NOT_FOUND(404, "not found"),
+    TENANT_NOT_ACCEPTABLE(406, "not acceptable"),
     TENANT_BAD_REQUEST(400, "bad request"),
     TENANT_INTERNAL_ERROR(500, "internal error")
 

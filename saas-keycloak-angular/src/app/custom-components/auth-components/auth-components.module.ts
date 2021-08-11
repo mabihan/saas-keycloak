@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TeamRegistrationComponent } from './team-registration/team-registration.component';
 import { TeamRegistrationFormComponent } from './team-registration-form/team-registration-form.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NzFormModule } from "ng-zorro-antd/form";
@@ -15,21 +14,30 @@ import { NzTabsModule } from "ng-zorro-antd/tabs";
 import { TeamRegistrationStep004Component } from './team-registration-step004/team-registration-step004.component';
 import { NzResultModule } from "ng-zorro-antd/result";
 import { NzSpinModule } from "ng-zorro-antd/spin";
+import { NzProgressModule } from "ng-zorro-antd/progress";
+import { PasswordStrengthMeterModule } from "angular-password-strength-meter";
+import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
+import { UserLoginStep001Component } from './user-login-step001/user-login-step001.component';
+import { UserLoginStep002Component } from './user-login-step002/user-login-step002.component';
+import { RouterModule } from "@angular/router";
 
 
 
 @NgModule({
-    declarations: [
-        TeamRegistrationComponent,
-        TeamRegistrationFormComponent,
-        TeamRegistrationStep001Component,
-        TeamRegistrationStep002Component,
-        TeamRegistrationStep003Component,
-        TeamRegistrationStep004Component
-    ],
-    exports: [
-        TeamRegistrationComponent
-    ],
+  declarations: [
+    TeamRegistrationFormComponent,
+    TeamRegistrationStep001Component,
+    TeamRegistrationStep002Component,
+    TeamRegistrationStep003Component,
+    TeamRegistrationStep004Component,
+    UserLoginFormComponent,
+    UserLoginStep001Component,
+    UserLoginStep002Component
+  ],
+  exports: [
+    TeamRegistrationFormComponent,
+    UserLoginFormComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -41,7 +49,10 @@ import { NzSpinModule } from "ng-zorro-antd/spin";
     NzStepsModule,
     NzTabsModule,
     NzResultModule,
-    NzSpinModule
+    NzSpinModule,
+    NzProgressModule,
+    PasswordStrengthMeterModule,
+    RouterModule
   ]
 })
 export class AuthComponentsModule { }

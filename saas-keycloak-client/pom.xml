@@ -45,6 +45,30 @@
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>cz.habarta.typescript-generator</groupId>
+                <artifactId>typescript-generator-maven-plugin</artifactId>
+                <version>2.32.889</version>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsonLibrary>jackson2</jsonLibrary>
+                    <classPatterns>
+                        <pattern>com.example.demo.model.*</pattern>
+                    </classPatterns>
+                    <outputKind>module</outputKind>
+                    <outputFile>../saas-keycloak-angular/src/app/core/model/api/api.d.ts</outputFile>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 </project>

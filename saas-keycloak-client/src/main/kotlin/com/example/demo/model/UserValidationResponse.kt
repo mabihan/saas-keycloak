@@ -8,4 +8,7 @@ data class UserValidationResponse(
 
         @ApiModelProperty(required = true)
         val message: String,
+
+        @ApiModelProperty(required = true)
+        val error: String,
 )

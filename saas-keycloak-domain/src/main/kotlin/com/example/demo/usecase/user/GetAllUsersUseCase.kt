@@ -9,7 +9,7 @@ import javax.inject.Named
 @Named
 class GetAllUsersUseCase(private val getAllUsersGateway: GetAllUsersGateway) {
 
-    fun execute(tenantNamespace: String, pageable: Pageable): Page<UserDomain> {
-        return this.getAllUsersGateway.execute(tenantNamespace, pageable)
+    fun execute(tenantUuid: String, pageable: Pageable): Page<UserDomain> {
+        return this.getAllUsersGateway.execute(tenantUuid, pageable)
     }
 }

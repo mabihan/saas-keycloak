@@ -1,9 +1,6 @@
 package com.example.demo.api
 
-import com.example.demo.model.MessageResponse
-import com.example.demo.model.UserRequest
-import com.example.demo.model.UserResponse
-import com.example.demo.model.UserValidationResponse
+import com.example.demo.model.*
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
@@ -12,37 +9,43 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.util.concurrent.CompletionStage
 import javax.validation.Valid
+import javax.validation.constraints.Email
 
-@RequestMapping("/v1/")
+@RequestMapping("/api/v1/tenant/")
 @Api(tags = ["User"])
 interface UserApi {
 
-    @ApiOperation(value = "Create a user", notes = "Create a user in keycloak")
+    @ApiOperation(value = "Create a user", notes = "Create a user.")
     @ApiResponses(value = [ApiResponse(code = 201, message = "Created", response = MessageResponse::class),
         ApiResponse(code = 208, message = "User already exist", response = MessageResponse::class),
         ApiResponse(code = 400, message = "Bad request", response = MessageResponse::class),
         ApiResponse(code = 500, message = "Internal error to create the user", response = MessageResponse::class)])
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/{tenantNamespace}/user/")
-    fun createUser(@PathVariable tenantNamespace: String, @Valid @RequestBody userRequest: UserRequest): MessageResponse
+    @PostMapping("/{tenantUuid}/user/")
+    fun createUser(@PathVariable tenantUuid: String, @Valid @RequestBody userRequest: UserRequest): CompletionStage<UserResponse>
 
-    @ApiOperation(value = "Update a user", notes = "Update an existing user in keycloak")
+    @ApiOperation(value = "Update a user", notes = "Update an existing user.")
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/{tenantNamespace}/user")
-    fun updateUser(@PathVariable tenantNamespace: String, @Valid @RequestBody userRequest: UserRequest): MessageResponse
+    @PutMapping("/{tenantUuid}/user")
+    fun updateUser(@PathVariable tenantUuid: String, @Valid @RequestBody userRequest: UserRequest): CompletionStage<UserResponse>
 
-    @ApiOperation(value = "Get user details", notes = "Get user details from keycloak")
+    @ApiOperation(value = "Get user details", notes = "Get user details.")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{tenantNamespace}/user//{id}")
-    fun getUser(@PathVariable tenantNamespace: String, @PathVariable id: String): CompletionStage<UserResponse>
+    @GetMapping("/{tenantUuid}/user//{id}")
+    fun getUser(@PathVariable tenantUuid: String, @PathVariable id: String): CompletionStage<UserResponse>
 
-    @ApiOperation(value = "Get username or email validity", notes = "Get username or email validity from keycloak")
+    @ApiOperation(value = "Get username validity", notes = "Get username validity.")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{tenantNamespace}/user/validity")
-    fun getUserValidity(@PathVariable tenantNamespace: String, username: String?, email: String?): CompletionStage<UserValidationResponse>
+    @GetMapping("/{tenantUuid}/user/username-validity")
+    fun getUsernameValidity(@PathVariable tenantUuid: String, username: String): CompletionStage<ObjectValidationResponse>
 
-    @ApiOperation(value = "Get all users", notes = "Get username or email validity from keycloak")
+    @ApiOperation(value = "Get email validity", notes = "Get email validity.")
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{tenantNamespace}/users")
-    fun getAllUsers(@PathVariable tenantNamespace: String, size: Int, page: Int): Any
+    @GetMapping("/{tenantUuid}/user/email-validity")
+    fun getEmailValidity(@PathVariable tenantUuid: String, email: String): CompletionStage<ObjectValidationResponse>
+
+    @ApiOperation(value = "Get all users", notes = "Get all from tenant.")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{tenantUuid}/users")
+    fun getAllUsers(@PathVariable tenantUuid: String, size: Int, page: Int): Any
 }

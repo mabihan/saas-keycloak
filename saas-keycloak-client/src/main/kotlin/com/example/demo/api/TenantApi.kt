@@ -7,11 +7,10 @@ import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.security.Principal
 import java.util.concurrent.CompletionStage
 import javax.validation.Valid
 
-@RequestMapping("/v1/")
+@RequestMapping("/api/v1/")
 @Api(tags = ["Tenant"])
 interface TenantApi {
 
@@ -22,11 +21,15 @@ interface TenantApi {
         ApiResponse(code = 500, message = "Internal error to create the tenant", response = MessageResponse::class)])
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/tenant")
-    fun createTenant(@Valid @RequestBody tenantRequest: TenantRequest): MessageResponse
+    fun createTenant(@Valid @RequestBody tenantRequest: TenantRequest): CompletionStage<TenantResponse>
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/tenant/validity")
-    fun getNamespaceValidity(namespace: String): CompletionStage<Boolean>
+    @GetMapping("/tenant/new/validate")
+    fun getNewNamespaceValidity(namespace: String): CompletionStage<ObjectValidationResponse>
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/tenant/validate")
+    fun getNamespaceValidity(namespace: String): CompletionStage<ObjectValidationResponse>
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/tenant")

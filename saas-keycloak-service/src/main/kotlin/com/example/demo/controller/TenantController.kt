@@ -2,6 +2,7 @@ package com.example.demo.controller
 
 import com.example.demo.api.TenantApi
 import com.example.demo.model.*
+import com.example.demo.translator.ObjectValidationDomainToObjectValidationResponseTranslator
 import com.example.demo.translator.TenantDomainToTenantResponseTranslator
 import com.example.demo.translator.TenantRequestToTenantDomainTranslator
 import com.example.demo.usecase.tenant.*
@@ -20,19 +21,19 @@ class TenantController(
     private val getTenantByNamespaceUseCase: GetTenantByNamespaceUseCase,
     private val getAllTenantsUseCase: GetAllTenantsUseCase,
     private val deleteAllTenantsUseCase: DeleteAllTenantsUseCase,
-    private val getTenantNamespaceAvailabilityUseCase: GetTenantNamespaceAvailabilityUseCase
+    private val validateTenantUseCase: ValidateTenantUseCase
     ) : TenantApi {
 
     private val log: Logger = LoggerFactory.getLogger(TenantController::class.java)
 
-    override fun createTenant(tenantRequest: TenantRequest): MessageResponse {
+    override fun createTenant(tenantRequest: TenantRequest): CompletionStage<TenantResponse> {
         log.info("Tenant API starting to creating the tenant: {}", tenantRequest.namespace)
 
         val tenantDomain = TenantRequestToTenantDomainTranslator().translate(tenantRequest)
 
-        createTenantUseCase.execute(tenantDomain)
-
-        return MessageResponse(TenantHttpResponse.TENANT_CREATED.httpStatus, TenantHttpResponse.TENANT_CREATED.httpMessage)
+        return CompletableFuture
+            .supplyAsync { createTenantUseCase.execute(tenantDomain) }
+            .thenApplyAsync { TenantDomainToTenantResponseTranslator().translate(it) }
     }
 
     override fun getTenant(namespace: String): CompletionStage<TenantResponse> {
@@ -56,9 +57,15 @@ class TenantController(
         return MessageResponse(TenantHttpResponse.TENANT_DELETED.httpStatus, TenantHttpResponse.TENANT_DELETED.httpMessage)
     }
 
-    override fun getNamespaceValidity(namespace: String): CompletionStage<Boolean> {
+    override fun getNewNamespaceValidity(namespace: String): CompletionStage<ObjectValidationResponse> {
         return CompletableFuture
-            .supplyAsync { getTenantNamespaceAvailabilityUseCase.execute(namespace) }
-            .thenApplyAsync { it }
+            .supplyAsync { validateTenantUseCase.executeForNew(namespace) }
+            .thenApplyAsync { ObjectValidationDomainToObjectValidationResponseTranslator().translate(it) }
+    }
+
+    override fun getNamespaceValidity(namespace: String): CompletionStage<ObjectValidationResponse> {
+        return CompletableFuture
+            .supplyAsync { validateTenantUseCase.executeForExisting(namespace) }
+            .thenApplyAsync { ObjectValidationDomainToObjectValidationResponseTranslator().translate(it) }
     }
 }

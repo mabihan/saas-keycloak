@@ -8,9 +8,10 @@ import { NzButtonModule } from "ng-zorro-antd/button";
 import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';
 import { FunctionalitiesComponent } from './functionalities/functionalities.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
-  imports: [WelcomeRoutingModule, CommonModule, NzButtonModule],
+  imports: [WelcomeRoutingModule, CommonModule, NzButtonModule, ReactiveFormsModule],
   declarations: [WelcomeComponent, HelpComponent, AboutComponent, FunctionalitiesComponent],
   exports: [WelcomeComponent],
   providers: []

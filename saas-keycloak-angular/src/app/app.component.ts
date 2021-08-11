@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, Routes } from "@angular/router";
-import { LoginComponent } from "./pages/auth/login/login.component";
-import { RegisterComponent } from "./pages/auth/register/register.component";
+import { NavigationEnd, Router } from "@angular/router";
 
-const noMenuRoutes = [
+const externalAppRoutes = [
   '/auth',
-  '/welcome'
+  '/welcome',
+  '/error',
+  '/boarding',
+  '/roadmap'
 ];
 
 @Component({
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit {
   modifyHeader(location: any) {
     if (location instanceof NavigationEnd) {
 
-      for(let route of noMenuRoutes) {
+      for(let route of externalAppRoutes) {
         if( location.urlAfterRedirects.startsWith(route)) {
           this.internalContent = false;
           break;

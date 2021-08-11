@@ -4,7 +4,9 @@ import com.example.demo.exception.AlreadyExistException
 import com.example.demo.exception.BadRequestException
 import com.example.demo.exception.InternalErrorException
 import com.example.demo.exception.tenant.TenantAlreadyExistException
-import com.example.demo.exception.tenant.TenantNotFoudException
+import com.example.demo.exception.tenant.TenantCreationRequestInvalidException
+import com.example.demo.exception.tenant.TenantNotFoundException
+import com.example.demo.exception.tenant.TenantUuidMalformedException
 import com.example.demo.exception.user.UserAlreadyExistException
 import com.example.demo.exception.user.UserNotFoundException
 import com.example.demo.model.MessageResponse
@@ -112,9 +114,9 @@ class RestErrorHandler {
                 ProductHttpResponse.PRODUCT_INTERNAL_ERROR.httpMessage, errorList)
     }
 
-    @ExceptionHandler(TenantNotFoudException::class)
+    @ExceptionHandler(TenantNotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun handleTenantNotFoundException(exception: TenantNotFoudException): MessageResponse? {
+    fun handleTenantNotFoundException(exception: TenantNotFoundException): MessageResponse? {
         val errorList = ArrayList<String>()
         errorList.add(exception.message!!)
 
@@ -130,6 +132,26 @@ class RestErrorHandler {
 
         return MessageResponse(TenantHttpResponse.TENANT_ALREADY_EXIST.httpStatus,
             TenantHttpResponse.TENANT_ALREADY_EXIST.httpMessage, errorList)
+    }
+
+    @ExceptionHandler(TenantCreationRequestInvalidException::class)
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    fun handleTenantNotFoundException(exception: TenantCreationRequestInvalidException): MessageResponse? {
+        val errorList = ArrayList<String>()
+        errorList.add(exception.message!!)
+
+        return MessageResponse(TenantHttpResponse.TENANT_NOT_ACCEPTABLE.httpStatus,
+            TenantHttpResponse.TENANT_NOT_ACCEPTABLE.httpMessage, errorList)
+    }
+
+    @ExceptionHandler(TenantUuidMalformedException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleTenantNotFoundException(exception: TenantUuidMalformedException): MessageResponse? {
+        val errorList = ArrayList<String>()
+        errorList.add(exception.message!!)
+
+        return MessageResponse(TenantHttpResponse.TENANT_BAD_REQUEST.httpStatus,
+            TenantHttpResponse.TENANT_BAD_REQUEST.httpMessage, errorList)
     }
 
     @ExceptionHandler(UserNotFoundException::class)
