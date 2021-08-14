@@ -14,9 +14,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { AuthModule } from './pages/auth/auth.module';
 import { LayoutModule } from './layout/layout.module';
-import { ConfigInitService } from "./core/init/config-init.service";
-import { initializeKeycloak } from "./core/init/keycloak-init.factory";
-import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
+import { KeycloakAngularModule } from "keycloak-angular";
 import { WebappModule } from './pages/webapp/webapp.module';
 import { CustomComponentsModule } from './custom-components/custom-components.module';
 import { CoreModule } from './core/core.module';
@@ -49,13 +47,6 @@ registerLocaleData(en);
     RoadmapModule,
   ],
   providers: [
-    ConfigInitService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService, ConfigInitService],
-    },
     { provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
 })

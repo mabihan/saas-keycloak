@@ -43,9 +43,11 @@ export class TeamRegistrationStep001Component implements OnInit {
 
       let fetchTeamName: string = params['team'];
 
-      if (fetchTeamName.length) {
-        this.validateForm.patchValue({teamName: params['team']})
-        this.validateTeamName(params['team'])
+      if (fetchTeamName) {
+        if (fetchTeamName.length) {
+          this.validateForm.patchValue({teamName: params['team']})
+          this.validateTeamName(params['team'])
+        }
       }
     });
   }

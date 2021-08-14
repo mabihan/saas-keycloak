@@ -2,7 +2,6 @@ import { Component, HostListener } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { Observable, Observer } from "rxjs";
 import { NzValidateStatusEnum } from "@/app/core/model/enum/NzValidateStatusEnum";
-import { KeycloakUserService } from "@/app/core/service/keycloak/user/keycloak-user.service";
 import { UserService } from "@/app/core/service/my-little-saas-application/user/user.service";
 import { Timezone, TimezonesService } from "@/app/core/service/my-little-saas-application/timezones.service";
 import { ObjectValidationResponse, TenantResponse, UserResponse } from "@/app/core/model/api/api";
@@ -27,7 +26,6 @@ export class TeamRegistrationFormComponent {
 
   constructor(
     private fb: FormBuilder,
-    private keycloakUserService: KeycloakUserService,
     private userService: UserService,
     private timezonesService: TimezonesService
   ) {

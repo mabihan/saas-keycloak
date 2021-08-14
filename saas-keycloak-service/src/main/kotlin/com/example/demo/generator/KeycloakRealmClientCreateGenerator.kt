@@ -7,10 +7,10 @@ import java.time.LocalDateTime
 
 class KeycloakRealmClientCreateGenerator {
 
-    fun generate(realm: String, applicationProperties: ApplicationProperties): KeycloakRealmClientCreate {
+    fun generate(applicationProperties: ApplicationProperties): KeycloakRealmClientCreate {
 
         return KeycloakRealmClientCreate(
-            name = "${applicationProperties.keycloak.client.namePrefix}-${realm}",
+            name = applicationProperties.keycloak.client.clientId,
             adminUrl = applicationProperties.keycloak.client.adminUrl.toString(),
             rootUrl = applicationProperties.keycloak.client.rootUrl.toString(),
             description = "Client created via REST API on ${LocalDateTime.now()}",

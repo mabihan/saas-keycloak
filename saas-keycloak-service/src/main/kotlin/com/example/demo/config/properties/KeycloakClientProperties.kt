@@ -5,7 +5,7 @@ import java.net.URI
 
 @ConstructorBinding
 class KeycloakClientProperties {
-    var namePrefix: String = "saas-frontend-client"
+    var clientId: String = "saas-frontend-client"
         set(value) {
             field = when {
                 value.isNotEmpty() -> value

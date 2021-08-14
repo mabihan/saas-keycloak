@@ -5,7 +5,14 @@
 export const environment = {
   production: false,
   api_url: "http://localhost:8090/v1",
-  configFile: 'assets/config/config.dev.json'
+  configFile: 'assets/config/config.dev.json',
+  keycloak: {
+    url: "http://localhost:8080" ,
+    defaultRealm: "master",
+    clientName: "angular-frontend-client",
+    offline: false,
+    multiTenant: true,
+  }
 };
 
 /*

@@ -16,7 +16,8 @@ import javax.inject.Named
 class CreateTenantUseCase(private val doesTenantNamespaceExistGateway: DoesTenantNamespaceExistGateway,
                           private val createTenantGateway: CreateTenantGateway,
                           private val createRealmGateway: CreateRealmGateway,
-                          private val createClientGateway: CreateClientGateway ) {
+                          private val createClientGateway: CreateClientGateway,
+) {
 
     private val log: Logger = LoggerFactory.getLogger(CreateTenantUseCase::class.java)
 
@@ -28,7 +29,6 @@ class CreateTenantUseCase(private val doesTenantNamespaceExistGateway: DoesTenan
         }
         createRealmGateway.execute(tenantCreateDomain)
         createClientGateway.execute(tenantCreateDomain.sanitizedNamespace)
-
         return createTenantGateway.execute(tenantCreateDomain)
     }
 }

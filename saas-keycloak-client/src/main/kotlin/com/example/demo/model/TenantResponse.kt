@@ -14,4 +14,7 @@ data class TenantResponse(
 
         @ApiModelProperty(required = true)
         val timeZone: String,
+
+        @ApiModelProperty(required = true)
+        val clients: List<ClientResponse>,
 )

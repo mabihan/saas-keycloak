@@ -2,7 +2,9 @@ package com.example.demo.gateway.keycloak.repository.impl
 
 import com.example.demo.config.keycloak.KeycloakRestConfig
 import com.example.demo.config.properties.ApplicationProperties
+import com.example.demo.exception.keycloak.KeycloakClientAlreadyExistException
 import com.example.demo.exception.keycloak.KeycloakRestCommunicationException
+import com.example.demo.gateway.keycloak.model.KeycloakClient
 import com.example.demo.gateway.keycloak.model.KeycloakRealmClientCreate
 import com.example.demo.gateway.keycloak.model.KeycloakRealmCreate
 import com.example.demo.gateway.keycloak.repository.ClientRepository
@@ -39,15 +41,28 @@ class ClientRepositoryRestImpl(private val keycloakAuthenticatedWebClient: WebCl
                     return@exchangeToMono response.bodyToMono(KeycloakRealmClientCreate::class.java)
                 } else if (response.statusCode() == HttpStatus.CONFLICT){
                     log.warn("Client already created on realm $realm in keycloak")
-                    return@exchangeToMono response.bodyToMono(KeycloakRealmClientCreate::class.java)
+                    throw KeycloakClientAlreadyExistException("Client already created on realm $realm in keycloak")
                 } else {
                     throw KeycloakRestCommunicationException("Error while creating client on realm $realm : Got HTTP ${response.statusCode()} status code from Keycloak." )
                 } }
             .block()
     }
 
-    override fun findAll(realm: String) {
-        TODO("Not yet implemented")
+    override fun findAll(realm: String): List<KeycloakClient> {
+
+        val keycloakClientsListMono = keycloakAuthenticatedWebClient
+            .get()
+            .uri("/admin/realms/$realm/clients")
+            .header(HttpHeaders.AUTHORIZATION, "bearer ${this.keycloakRestConfig.getValidAuthorization().access_token}")
+            .exchangeToMono { response: ClientResponse ->
+                if (response.statusCode() == HttpStatus.OK) {
+                    log.info("Successfully created client on realm $realm in keycloak")
+                    return@exchangeToMono response.bodyToMono(Array<KeycloakClient>::class.java)
+                } else {
+                    throw KeycloakRestCommunicationException("Error while retrieving client on realm $realm : Got HTTP ${response.statusCode()} status code from Keycloak." )
+                } }
+
+        return keycloakClientsListMono.block().orEmpty().asList()
     }
 
     override fun get(realm: String, clientId: String) {

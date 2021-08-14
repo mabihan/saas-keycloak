@@ -35,7 +35,9 @@
               "src/styles.scss",
               "./node_modules/font-awesome/css/font-awesome.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/keycloak-js/dist/keycloak.min.js"
+            ]
           },
           "configurations": {
             "production": {

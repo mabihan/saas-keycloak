@@ -12,7 +12,7 @@ class GetAllTenantsGatewayImpl(private val tenantRepository: TenantRepository): 
 
     override fun execute(pageable: Pageable): List<TenantDomain> {
         return this.tenantRepository.findAll(pageable)
-            .map { tenantDB -> TenantDBToTenantDomainTranslator().translate(tenantDB) }
+            .map { tenantDB -> TenantDBToTenantDomainTranslator().translate(tenantDB, emptyList()) }
             .toList()
     }
 }

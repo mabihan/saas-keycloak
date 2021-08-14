@@ -8,4 +8,5 @@ data class TenantDomain(
         var schemaName: String,
         var keycloakRealm: String,
         val timeZone: ZoneOffset,
+        val clients: List<ClientDomain>
 )

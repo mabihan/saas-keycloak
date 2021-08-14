@@ -46,7 +46,7 @@ class CreateTenantGatewayImpl(  private val tenantRepository: TenantRepository,
 
             liquibase.afterPropertiesSet()
 
-            return TenantDBToTenantDomainTranslator().translate(tenantDb)
+            return TenantDBToTenantDomainTranslator().translate(tenantDb, emptyList())
 
         } catch (ex: Exception) {
             log.error("Internal error to create the tenant", ex)

@@ -1,11 +1,11 @@
 import { Component, HostListener } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from "@angular/forms";
 import { NzValidateStatusEnum } from "@/app/core/model/enum/NzValidateStatusEnum";
-import { KeycloakUserService } from "@/app/core/service/keycloak/user/keycloak-user.service";
 import { Observable, Observer } from "rxjs";
 import { ObjectValidationResponse, TenantResponse } from "@/app/core/model/api/api";
 import { TenantService } from "@/app/core/service/my-little-saas-application/tenant/tenant.service";
 import { KeycloakService } from "keycloak-angular";
+import { CustomKeycloakService } from "@/app/core/service/keycloak/custom-keycloak.service";
 
 @Component({
   selector: 'app-user-login-form',
@@ -14,7 +14,7 @@ import { KeycloakService } from "keycloak-angular";
 })
 export class UserLoginFormComponent {
 
-  FAKE_TIMEOUT_MS = 700
+  FAKE_TIMEOUT_MS = 400
   validateForm: FormGroup
 
   currentStep = 0;
@@ -23,8 +23,7 @@ export class UserLoginFormComponent {
 
   constructor(
     private fb: FormBuilder,
-    private keycloak: KeycloakService,
-    private keycloakUserService: KeycloakUserService,
+    private customKeycloakService: CustomKeycloakService,
     private tenantService: TenantService
   ) {
 
@@ -63,10 +62,7 @@ export class UserLoginFormComponent {
 
     this.tenantService.get(this.validateForm.get('teamName')?.value)
       .subscribe( (value: TenantResponse) => {
-        this.keycloakUserService.init(value)
-          .then(() => {
-            this.keycloak.login().then( r => console.log(r))
-          })
+        this.customKeycloakService.init(value)
       })
   }
 

@@ -1,6 +1,14 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 2.32.889 on 2021-08-10 10:52:45.
+// Generated using typescript-generator version 2.32.889 on 2021-08-11 22:00:55.
+
+export interface ClientResponse {
+    id: string;
+    clientId: string;
+    name: string;
+    rootUrl: string | null;
+    baseUrl: string | null;
+}
 
 export interface MessageResponse {
     httpCode: number;
@@ -35,11 +43,12 @@ export interface TenantResponse {
     namespace: string;
     keycloakRealm: string;
     timeZone: string;
+    clients: ClientResponse[];
 }
 
 export interface UserRequest {
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
     email: string;
     username: string;
     password: string;

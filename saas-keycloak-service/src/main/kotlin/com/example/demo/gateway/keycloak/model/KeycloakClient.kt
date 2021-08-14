@@ -1,3 +1,32 @@
 package com.example.demo.gateway.keycloak.model
 
-class KeycloakClient
+data class KeycloakClient(
+    val id: String,
+    val clientId: String,
+    val name: String,
+    val rootUrl: String?,
+    val baseUrl: String?,
+    val surrogateAuthRequired: Boolean,
+    val enabled: Boolean,
+    val alwaysDisplayInConsole: Boolean,
+    val clientAuthenticatorType: String,
+    val redirectUris: List<String>,
+    val webOrigins: List<Any?>,
+    val notBefore: Long,
+    val bearerOnly: Boolean,
+    val consentRequired: Boolean,
+    val standardFlowEnabled: Boolean,
+    val implicitFlowEnabled: Boolean,
+    val directAccessGrantsEnabled: Boolean,
+    val serviceAccountsEnabled: Boolean,
+    val publicClient: Boolean,
+    val frontchannelLogout: Boolean,
+    val protocol: String,
+    val attributes: Any,
+    val authenticationFlowBindingOverrides: Any,
+    val fullScopeAllowed: Boolean,
+    val nodeReRegistrationTimeout: Long,
+    val defaultClientScopes: List<String>,
+    val optionalClientScopes: List<String>,
+    val access: KeycloakAccess
+)
