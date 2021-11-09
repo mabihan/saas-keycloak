@@ -21,7 +21,8 @@
 		<module>saas-keycloak-client</module>
 		<module>saas-keycloak-domain</module>
 		<module>saas-keycloak-service</module>
-		<module>saas-keycloak-angular</module>
+		<module>saas-keycloak-angular-external</module>
+		<module>saas-keycloak-angular-internal</module>
 	</modules>
 
 	<properties>

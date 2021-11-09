@@ -1,0 +1,71 @@
+.navbar {
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.navbar-logged-in {
+  overflow-y: hidden !important;
+  font-size: 0.85em;
+  padding: 0;
+}
+
+.navbar-logged-in.closed {
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  font-weight: 600;
+
+}
+
+.layout {
+  min-height: 100vh;
+}
+
+.logo {
+  width: 175px;
+  height: 32px;
+  background-image: url("~src/assets/brand/brand+name-white.png");
+  background-size: 175px 32px;
+  background-repeat: no-repeat;
+  margin: 16px 24px 16px 0;
+  float: left;
+}
+
+nz-header {
+  position: fixed;
+  width: 100%;
+}
+
+[nz-menu] {
+  line-height: 64px;
+}
+
+nz-content {
+  padding: 0;
+  margin-top: 0;
+}
+
+nz-breadcrumb {
+  margin: 16px 0;
+}
+
+.inner-content {
+  min-height: 90vh;
+  background: #fff;
+  padding: 24px 24px 0 24px;
+}
+
+nz-footer {
+  text-align: center;
+}
+
+.ant-menu-item {
+  i {
+    margin-right: 0;
+  }
+}

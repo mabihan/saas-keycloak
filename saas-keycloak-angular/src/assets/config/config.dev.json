@@ -1,5 +1,0 @@
-{
-    "KEYCLOAK_URL": "http://localhost:8080",
-    "KEYCLOAK_REALM": "master",
-    "KEYCLOAK_CLIENT_ID": "keycloak-angular"
-}

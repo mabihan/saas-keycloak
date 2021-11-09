@@ -11,30 +11,9 @@ class KeycloakRealmClientCreateGenerator {
 
         return KeycloakRealmClientCreate(
             name = applicationProperties.keycloak.client.clientId,
-            adminUrl = applicationProperties.keycloak.client.adminUrl.toString(),
-            rootUrl = applicationProperties.keycloak.client.rootUrl.toString(),
-            description = "Client created via REST API on ${LocalDateTime.now()}",
-            surrogateAuthRequired = false,
-            enabled = true,
-            alwaysDisplayInConsole = false,
-            clientAuthenticatorType = applicationProperties.keycloak.client.clientAuthenticatorType,
-            redirectUris = applicationProperties.keycloak.client.redirectUris.map(URI::toString),
-            webOrigins = listOf("*"),
-            notBefore = 0,
-            bearerOnly = false,
-            consentRequired = false,
-            standardFlowEnabled = true,
-            implicitFlowEnabled = true,
-            directAccessGrantsEnabled = true,
-            serviceAccountsEnabled = false,
-            publicClient = true,
-            frontchannelLogout = false,
-            protocol = applicationProperties.keycloak.client.protocol,
-            fullScopeAllowed = true,
-            nodeReRegistrationTimeout = -1,
-            defaultClientScopes = listOf("web-origins","profile","roles","email"),
-            optionalClientScopes = listOf("address","phone","offline_access","microprofile-jwt"),
-            access = KeycloakRealmClientAccessCreateGenerator().generate()
+            redirectUris = applicationProperties.keycloak.client.redirectUris.map { "$it/*" },
+            webOrigins = applicationProperties.keycloak.client.redirectUris.map { it.toString() },
+            publicClient = true
         )
 
     }

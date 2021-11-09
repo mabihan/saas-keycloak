@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AppComponent } from "@/app/app.component";
+
+const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: '/welcome/home' },
+  { path: 'gateway', component: AppComponent },
+  { path: 'auth', loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule) },
+  { path: 'welcome', loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule) },
+  { path: 'app', loadChildren: () => import('./pages/webapp/webapp.module').then(m => m.WebappModule) },
+  { path: 'error', loadChildren: () => import('./pages/error/error.module').then(m => m.ErrorModule) },
+  { path: 'boarding', loadChildren: () => import('./pages/boarding/boarding.module').then(m => m.BoardingModule) },
+  { path: 'roadmap', loadChildren: () => import('./pages/roadmap/roadmap.module').then(m => m.RoadmapModule) }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

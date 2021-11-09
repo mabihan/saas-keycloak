@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "themes/fonts";
+@import "themes/colours";
+
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "~ngx-bootstrap/datepicker/bs-datepicker";
+
+@import "~ng-zorro-antd/ng-zorro-antd.css";
