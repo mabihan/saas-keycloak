@@ -27,6 +27,9 @@
 <div [formGroup]="validateForm" nz-row class="mt-5" *ngIf="currentStep<3">
   <div nz-col [nzOffset]="6" [nzSpan]="12">
     <div class="steps-action">
+      <button class="mr-2" nz-button nzType="default" routerLink="/boarding/start" *ngIf="currentStep == 0">
+        <span>Cancel</span>
+      </button>
       <button class="mr-2" nz-button nzType="default" (click)="pre()" *ngIf="currentStep > 0">
         <span>Previous</span>
       </button>

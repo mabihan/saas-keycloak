@@ -11,5 +11,5 @@ interface ClientRepository {
 
     fun findAll(realm: String): List<KeycloakClient>
 
-    fun get(realm: String, clientId: String)
+    fun get(realm: String, clientName: String)
 }

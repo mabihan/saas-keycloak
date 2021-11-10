@@ -1,11 +1,18 @@
 package com.example.demo
 
+import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import org.springframework.boot.builder.SpringApplicationBuilder
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
-class SaasKeycloak
+class SaasKeycloak : SpringBootServletInitializer() {
+
+    override fun configure(application: SpringApplicationBuilder): SpringApplicationBuilder {
+        return application.sources(SaasKeycloak::class.java)
+    }
+}
 
 fun main(args: Array<String>) {
-    runApplication<SaasKeycloak>(*args)
+    SpringApplication.run(SaasKeycloak::class.java, *args)
 }

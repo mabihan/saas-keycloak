@@ -12,7 +12,6 @@ export class KeycloakInitializerService {
   ) {
   }
 
-
   get action(): string {
     return this._action;
   }
@@ -27,28 +26,11 @@ export class KeycloakInitializerService {
 
   public initializer(): Promise<boolean> {
 
-    /**
-    return new Promise<boolean>((resolve, reject) => {
-      console.log("KeycloakInitializerService.initializer() called");
-
-      console.log(`action : ${this.action}`);
-      console.log(`keycloakRealm : ${this.keycloakRealm}`);
-      console.log(`keycloakClientId : ${this.keycloakClientId}`);
-
-      setTimeout(() => {
-        console.log('KeycloakInitializerService Finished');
-        resolve(true);
-      }, 2000);
-    });
-     */
-
     return new Promise<boolean>((resolve, reject) => {
 
-      console.log("KeycloakInitializerService.initializer() called");
-
-      console.log(`action : ${this._action}`);
-      console.log(`keycloakRealm : ${this._keycloakRealm}`);
-      console.log(`keycloakClientId : ${this._keycloakClientId}`);
+      if(!this.keycloakClientId || !this.keycloakRealm) {
+        window.location.href = `http://localhost:4200`
+      }
 
       resolve(this.keycloak.init({
         config: {

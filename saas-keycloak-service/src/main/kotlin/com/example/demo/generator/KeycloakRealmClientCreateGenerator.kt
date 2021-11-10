@@ -2,8 +2,6 @@ package com.example.demo.generator
 
 import com.example.demo.config.properties.ApplicationProperties
 import com.example.demo.gateway.keycloak.model.KeycloakRealmClientCreate
-import java.net.URI
-import java.time.LocalDateTime
 
 class KeycloakRealmClientCreateGenerator {
 

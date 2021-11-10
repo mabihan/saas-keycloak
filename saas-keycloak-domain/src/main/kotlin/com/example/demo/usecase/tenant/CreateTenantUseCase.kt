@@ -5,7 +5,6 @@ import com.example.demo.gateway.keycloak.client.CreateClientGateway
 import com.example.demo.gateway.keycloak.realm.CreateRealmGateway
 import com.example.demo.gateway.tenant.CreateTenantGateway
 import com.example.demo.gateway.tenant.DoesTenantNamespaceExistGateway
-import com.example.demo.gateway.tenant.DoesTenantUuidExistGateway
 import com.example.demo.model.TenantCreateDomain
 import com.example.demo.model.TenantDomain
 import org.slf4j.Logger
@@ -27,7 +26,7 @@ class CreateTenantUseCase(private val doesTenantNamespaceExistGateway: DoesTenan
             log.info("Tenant already exist")
             throw AlreadyExistException("Tenant already exist")
         }
-        createRealmGateway.execute(tenantCreateDomain)
+        createRealmGateway.execute(tenantCreateDomain, )
         createClientGateway.execute(tenantCreateDomain.sanitizedNamespace)
         return createTenantGateway.execute(tenantCreateDomain)
     }

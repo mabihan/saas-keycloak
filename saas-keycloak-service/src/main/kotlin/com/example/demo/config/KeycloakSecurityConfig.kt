@@ -24,6 +24,7 @@ class KeycloakSecurityConfig : KeycloakWebSecurityConfigurerAdapter() {
         super.configure(http)
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.authorizeRequests()
+                .antMatchers("**/api/**", "**/swagger-ui.html", "**/webjars/**", "**/v2/**", "**/swagger-resources/**").anonymous()
                 .antMatchers("/v1/test").permitAll()
                 .antMatchers("/v1/product").hasAnyRole("branch_office")
                 .anyRequest()

@@ -19,6 +19,10 @@ import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.WebClient
 import javax.inject.Named
+import org.springframework.util.LinkedMultiValueMap
+
+
+
 
 
 @Profile("keycloak-rest")
@@ -55,11 +59,15 @@ class UserRepositoryRestImpl(private val keycloakAuthenticatedWebClient: WebClie
 
     override fun sendVerificationEmail(realm: String, id: String) {
 
+        val body: LinkedMultiValueMap<String, String> = LinkedMultiValueMap<String, String>()
+        body.add("redirect_uri", "http://localhost:4300")
+
         keycloakAuthenticatedWebClient
             .put()
             .uri("/admin/realms/${realm}/users/${id}/send-verify-email")
             .contentType(MediaType.APPLICATION_JSON)
             .header(HttpHeaders.AUTHORIZATION, "bearer ${this.keycloakRestConfig.getValidAuthorization().access_token}")
+            //.body(BodyInserters.fromFormData(body))
             .exchangeToMono { response: ClientResponse ->
                 if(response.statusCode() == HttpStatus.NO_CONTENT) {
                     log.debug("Sending verification email for user $id in realm $realm.")

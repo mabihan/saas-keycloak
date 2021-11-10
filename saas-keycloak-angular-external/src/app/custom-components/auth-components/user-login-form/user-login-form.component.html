@@ -3,7 +3,6 @@
     <h1 *ngIf="currentStep == 0">What's the name of your team ?</h1>
   </nz-form-control>
 </nz-form-item>
-
 <nz-tabset [nzSelectedIndex]="currentStep">
   <nz-tab>
     <app-user-login-step001 [validateForm]="this.validateForm" ></app-user-login-step001>
@@ -13,9 +12,10 @@
 <div [formGroup]="validateForm" nz-row class="mt-5" *ngIf="currentStep<3">
   <div nz-col [nzOffset]="6" [nzSpan]="12">
     <div class="steps-action">
-<!--      <button class="mr-2" nz-button nzType="default" (click)="pre()" *ngIf="currentStep > 0">
-        <span>Previous</span>
+      <button class="mr-2" nz-button nzType="default" routerLink="/boarding/start">
+        <span>Cancel</span>
       </button>
+      <!--
       <button nz-button nzType="default" [disabled]="!this.currentPageValidStatus" (click)="next()" *ngIf="currentStep < 2">
         <span>Next</span>
       </button>-->

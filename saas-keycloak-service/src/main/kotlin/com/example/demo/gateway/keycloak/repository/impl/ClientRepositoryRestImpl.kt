@@ -1,14 +1,11 @@
 package com.example.demo.gateway.keycloak.repository.impl
 
 import com.example.demo.config.keycloak.KeycloakRestConfig
-import com.example.demo.config.properties.ApplicationProperties
 import com.example.demo.exception.keycloak.KeycloakClientAlreadyExistException
 import com.example.demo.exception.keycloak.KeycloakRestCommunicationException
 import com.example.demo.gateway.keycloak.model.KeycloakClient
 import com.example.demo.gateway.keycloak.model.KeycloakRealmClientCreate
-import com.example.demo.gateway.keycloak.model.KeycloakRealmCreate
 import com.example.demo.gateway.keycloak.repository.ClientRepository
-import com.example.demo.generator.KeycloakRealmClientCreateGenerator
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
@@ -37,6 +34,7 @@ class ClientRepositoryRestImpl(private val keycloakAuthenticatedWebClient: WebCl
             .body(BodyInserters.fromValue(client))
             .exchangeToMono { response: ClientResponse ->
                 if (response.statusCode() == HttpStatus.CREATED) {
+
                     log.info("Successfully created client on realm $realm in keycloak")
                     return@exchangeToMono response.bodyToMono(KeycloakRealmClientCreate::class.java)
                 } else if (response.statusCode() == HttpStatus.CONFLICT){

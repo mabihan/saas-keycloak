@@ -2,6 +2,8 @@ package com.example.demo.gateway.keycloak.impl.user
 
 import com.example.demo.exception.InternalErrorException
 import com.example.demo.exception.user.UserNotFoundException
+import com.example.demo.gateway.database.repository.TenantRepository
+import com.example.demo.gateway.keycloak.repository.RealmRepository
 import com.example.demo.gateway.keycloak.repository.UserRepository
 import com.example.demo.gateway.keycloak.translator.KeycloakUserToUserDomainTranslator
 import com.example.demo.gateway.keycloak.translator.UserDomainToKeycloakUserCreateTranslator
@@ -11,7 +13,8 @@ import com.example.demo.model.UserDomain
 import javax.inject.Named
 
 @Named
-class CreateUserGatewayImpl(private val userRepository: UserRepository): CreateUserGateway {
+class CreateUserGatewayImpl(
+    private val userRepository: UserRepository): CreateUserGateway {
 
     override fun execute(tenantNamespace: String, userCreateDomain: UserCreateDomain): UserDomain {
 

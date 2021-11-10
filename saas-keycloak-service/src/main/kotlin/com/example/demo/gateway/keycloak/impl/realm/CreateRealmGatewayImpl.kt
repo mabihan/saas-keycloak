@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory
 import javax.inject.Named
 
 @Named
-class CreateRealmGatewayImpl(private val realmRepository: RealmRepository): CreateRealmGateway {
+class CreateRealmGatewayImpl(
+    private val realmRepository: RealmRepository): CreateRealmGateway {
 
     private val log: Logger = LoggerFactory.getLogger(CreateRealmGatewayImpl::class.java)
 
